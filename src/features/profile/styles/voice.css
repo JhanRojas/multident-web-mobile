@@ -1,0 +1,254 @@
+.voice-page {
+  --background: #f7f7fb;
+}
+
+.voice-shell {
+  width: min(100%, 430px);
+  min-height: calc(100vh - 72px);
+  margin: 0 auto;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 18px;
+}
+
+.voice-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 22px 18px;
+}
+
+.voice-header h1 {
+  font-size: 17px;
+  line-height: 1;
+  font-weight: 700;
+  color: #181a20;
+  margin: 0;
+}
+
+.voice-header-icon {
+  font-size: 22px;
+  color: #006cff;
+}
+
+.voice-divider {
+  width: 100%;
+  height: 1px;
+  background: #e7e7ef;
+}
+
+.voice-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 24px 22px 18px;
+  min-height: 270px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.voice-message-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.voice-message-group.assistant {
+  align-items: flex-start;
+}
+
+.voice-message-group.user {
+  align-items: flex-end;
+}
+
+.voice-role {
+  font-size: 11px;
+  color: #8d8f97;
+  padding: 0 10px;
+}
+
+.voice-bubble {
+  max-width: 78%;
+  padding: 13px 16px;
+  border-radius: 22px;
+  font-size: 13px;
+  line-height: 1.25;
+  font-weight: 600;
+  color: #151821;
+}
+
+.voice-bubble.assistant {
+  background: #f0f0f6;
+  border-bottom-left-radius: 10px;
+}
+
+.voice-bubble.user {
+  background: #e9f1ff;
+  border-bottom-right-radius: 10px;
+}
+
+.voice-control-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 22px 18px;
+}
+
+.voice-mic-button {
+  width: 62px;
+  height: 62px;
+  border: none;
+  border-radius: 999px;
+  background: #087cff;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 28px rgba(8, 124, 255, 0.22);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  cursor: pointer;
+}
+
+.voice-mic-button ion-icon {
+  font-size: 28px;
+}
+
+.voice-mic-button:active {
+  transform: scale(0.96);
+}
+
+.voice-mic-button.listening {
+  animation: pulse-mic 1.2s infinite;
+}
+
+@keyframes pulse-mic {
+  0% {
+    box-shadow: 0 0 0 0 rgba(8, 124, 255, 0.36);
+  }
+
+  70% {
+    box-shadow: 0 0 0 18px rgba(8, 124, 255, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(8, 124, 255, 0);
+  }
+}
+
+.voice-transcription-label {
+  margin: 16px 0 14px;
+  font-size: 12px;
+  color: #8f9199;
+}
+
+.voice-transcript-box {
+  width: 100%;
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border: 1px solid #cfd1da;
+  border-radius: 10px;
+  font-size: 13px;
+  color: #4d5058;
+  background: #ffffff;
+}
+
+.voice-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 28px;
+  padding: 4px 22px 22px;
+}
+
+.voice-chip {
+  min-width: 128px;
+  min-height: 42px;
+  padding: 0 16px;
+  border: 1px solid #cfd2dc;
+  background: #f7f7fc;
+  border-radius: 999px;
+  color: #171a21;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.16s ease, background 0.16s ease;
+}
+
+.voice-chip ion-icon {
+  color: #087cff;
+  font-size: 18px;
+}
+
+.voice-chip:active {
+  transform: scale(0.97);
+  background: #eef3ff;
+}
+
+.voice-footer-actions {
+  margin-top: auto;
+  border-top: 1px solid #ececf3;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  padding: 24px 18px 4px;
+}
+
+.voice-action-button {
+  --background: #f6f6fb;
+  --background-hover: #eef2fb;
+  --color: #11141b;
+  --border-radius: 14px;
+  --box-shadow: none;
+  border: 1px solid #e0e2ea;
+  border-radius: 14px;
+  height: 56px;
+  font-size: 17px;
+  font-weight: 700;
+  text-transform: none;
+}
+
+.voice-action-button ion-icon {
+  font-size: 25px;
+}
+
+@media (max-width: 420px) {
+  .voice-shell {
+    width: 100%;
+  }
+
+  .voice-chat {
+    min-height: 245px;
+    max-height: 325px;
+  }
+
+  .voice-quick-actions {
+    gap: 14px;
+  }
+
+  .voice-chip {
+    min-width: calc(50% - 8px);
+  }
+
+  .voice-footer-actions {
+    gap: 16px;
+  }
+}
+
+.voice-chat {
+  min-height: 300px;
+  max-height: 390px;
+}
+
+.voice-bubble {
+  line-height: 1.35;
+}
+
+.voice-chip {
+  min-width: 145px;
+}
