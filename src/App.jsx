@@ -14,13 +14,13 @@ import { Route, Redirect } from 'react-router-dom'
 
 import {
   homeOutline,
-  accessibilityOutline,
+  micOutline,
   calendarOutline,
   personOutline
 } from 'ionicons/icons'
 
 import Home from './pages/Home'
-import Accessibility from './pages/Accessibility'
+import VoiceAssistant from './pages/VoiceAssistant'
 import Appointments from './pages/Appointments'
 import Profile from './pages/Profile'
 
@@ -45,8 +45,8 @@ function App() {
 
             <Route
               exact
-              path="/accessibility"
-              component={Accessibility}
+              path="/voiceAssistant"
+              component={VoiceAssistant}
             />
 
             <Route
@@ -76,17 +76,17 @@ function App() {
               <IonLabel>Citas</IonLabel>
             </IonTabButton>
 
-            <IonTabButton
-              tab="accessibility"
-              href="/accessibility"
-            >
-              <IonIcon icon={accessibilityOutline} />
-              <IonLabel>Accesibilidad</IonLabel>
-            </IonTabButton>
-
             <IonTabButton tab="profile" href="/profile">
               <IonIcon icon={personOutline} />
               <IonLabel>Perfil</IonLabel>
+            </IonTabButton>
+
+            <IonTabButton
+              tab="voiceAssistant"
+              href="/voiceAssistant"
+            >
+              <IonIcon icon={micOutline} />
+              <IonLabel>Voz</IonLabel>
             </IonTabButton>
 
           </IonTabBar>
