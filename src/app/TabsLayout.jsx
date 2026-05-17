@@ -15,10 +15,10 @@ import {
 } from 'ionicons/icons'
 
 import { Route, Redirect } from 'react-router-dom'
-import Home from '../features/home/Home'
-import Appointments from '../features/appointments/Appointments'
-import Profile from '../features/profile/Profile'
-import VoiceAssistant from '../features/voice/VoiceAssistant'
+import Home from '../features/home'
+import Appointments from '../features/appointments'
+import Profile from '../features/profile'
+import VoiceAssistant from '../features/voice'
 
 export default function TabsLayout() {
 
