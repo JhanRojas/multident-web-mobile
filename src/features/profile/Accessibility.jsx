@@ -35,6 +35,7 @@ export default function Accessibility() {
   // Add or remove the "ion-palette-dark" class on the html element
   const toggleDarkPalette = (shouldAdd) => {
     document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
+    localStorage.setItem('darkMode',shouldAdd)
   };
 
   // Check/uncheck the toggle and update the palette based on isDark
@@ -44,23 +45,15 @@ export default function Accessibility() {
   };
 
   useEffect(() => {
-    // Use matchMedia to check the user preference
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-    // Initialize the dark palette based on the initial
-    // value of the prefers-color-scheme media query
-    initializeDarkPalette(prefersDark.matches);
-
-    const setDarkPaletteFromMediaQuery = (mediaQuery) => {
-      initializeDarkPalette(mediaQuery.matches);
-    };
-
-    // Listen for changes to the prefers-color-scheme media query
-    prefersDark.addEventListener('change', setDarkPaletteFromMediaQuery);
-
-    return () => {
-      prefersDark.removeEventListener('change', setDarkPaletteFromMediaQuery);
-    };
+    const savedDarkMode =
+      localStorage.getItem('darkMode') === 'true'
+  
+    setPaletteToggle(savedDarkMode)
+  
+    document.documentElement.classList.toggle(
+      'ion-palette-dark',
+      savedDarkMode
+    )
   }, []);
 
   const router = useIonRouter()
