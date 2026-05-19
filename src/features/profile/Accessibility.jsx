@@ -1,98 +1,131 @@
+import React, { useEffect, useState } from 'react';
 import {
-  IonContent,
-  IonIcon,
   IonPage,
+  IonBackButton,
+  IonButton,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonListHeader,
   IonRange,
+  IonText,
+  IonTitle,
   IonToggle,
+  IonToolbar,
+  IonRadio,
+  IonRadioGroup,
   useIonRouter,
-} from '@ionic/react'
+} from '@ionic/react';
 
-import {
-  arrowBackOutline,
-  contrastOutline,
-  globeOutline,
-  personOutline,
-  reorderThreeOutline,
-  textOutline
-} from 'ionicons/icons'
-
-import './styles/Accessibility.css'
+import { personCircle, personCircleOutline, sunny, sunnyOutline, arrowBackOutline } from 'ionicons/icons';
 
 export default function Accessibility() {
+
+  const [paletteToggle, setPaletteToggle] = useState(false);
+
+  // Listen for the toggle check/uncheck to toggle the dark palette
+  const toggleChange = (event) => {
+    toggleDarkPalette(event.detail.checked);
+  };
+
+  // Add or remove the "ion-palette-dark" class on the html element
+  const toggleDarkPalette = (shouldAdd) => {
+    document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
+  };
+
+  // Check/uncheck the toggle and update the palette based on isDark
+  const initializeDarkPalette = (isDark) => {
+    setPaletteToggle(isDark);
+    toggleDarkPalette(isDark);
+  };
+
+  useEffect(() => {
+    // Use matchMedia to check the user preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+    // Initialize the dark palette based on the initial
+    // value of the prefers-color-scheme media query
+    initializeDarkPalette(prefersDark.matches);
+
+    const setDarkPaletteFromMediaQuery = (mediaQuery) => {
+      initializeDarkPalette(mediaQuery.matches);
+    };
+
+    // Listen for changes to the prefers-color-scheme media query
+    prefersDark.addEventListener('change', setDarkPaletteFromMediaQuery);
+
+    return () => {
+      prefersDark.removeEventListener('change', setDarkPaletteFromMediaQuery);
+    };
+  }, []);
 
   const router = useIonRouter()
 
   return (
-    <IonPage>
-      <IonContent fullscreen className="accessibility-page">
-        <div className="accessibility-container">
-          <div className="accessibility-header">
+ <IonPage>
+  <IonContent fullscreen className="accessibility-page">
+      <IonHeader className="ion-no-border">
+        <IonToolbar>
+          <IonButtons slot="start">
             <IonIcon icon={arrowBackOutline} onClick={() => router.goBack()} />
-            <h2>Accesibilidad</h2>
-          </div>
-          <div className="section-title ion-justify-content-start">
-            <IonIcon icon={globeOutline} />
-            <span>Idioma</span>
-          </div>
-          <div className="card-box">
-            <div className="option-item">Español</div>
-            <div className="option-item">English</div>
-            <div className="option-item no-border">Quechua</div>
-          </div>
-          <div className="section-title ion-justify-content-start">
-            <IonIcon icon={personOutline} />
-            <span>Perfil de accesibilidad</span>
-          </div>
-          <div className="card-box">
-            <div className="toggle-item">
-              <span>Visión Baja</span>
-              <IonToggle />
-            </div>
-            <div className="toggle-item">
-              <span>Dislexia</span>
-              <IonToggle />
-            </div>
-            <div className="toggle-item no-border">
-              <span>Daltonismo</span>
-              <IonToggle />
-            </div>
-          </div>
-          <div className="slider-section">
-            <div className="section-title ion-justify-content-start">
-              <IonIcon icon={textOutline} />
-              <span>Tamaño de texto</span>
-            </div>
-            <div className="slider-box">
-              <span>A</span>
-              <IonRange min={0} max={100} value={50} />
-              <span className="big-a">A</span>
-            </div>
-          </div>
-          <div className="slider-section">
-            <div className="section-title ion-justify-content-start">
-              <IonIcon icon={reorderThreeOutline} />
-              <span>Interlineado</span>
-            </div>
-            <div className="slider-box">
-              <span>=</span>
-              <IonRange min={0} max={100} value={60} />
-              <span>=</span>
-            </div>
-          </div>
-          <div className="contrast-section">
-            <div className="section-title ion-justify-content-start">
-              <IonIcon icon={contrastOutline} />
-              <span>Contraste</span>
-            </div>
-            <div className="contrast-buttons">
-              <button className="contrast-btn active">Claro</button>
-              <button className="contrast-btn">Oscuro</button>
-              <button className="contrast-btn">Alto</button>
-            </div>
-          </div>
-          <button className="reset-btn">Restablecer</button>
-        </div>
+          </IonButtons>
+          <IonTitle>Accesibilidad</IonTitle>
+
+        </IonToolbar>
+      </IonHeader>
+
+      <IonContent fullscreen={true} className="ion-padding">
+        <IonListHeader>Idioma</IonListHeader>
+        <IonList inset={true}>
+          <IonItem>Español</IonItem>
+          <IonItem>English</IonItem>
+          <IonItem>Quechua</IonItem>
+        </IonList>
+
+        <IonListHeader>Perfil de Accesiblidad</IonListHeader>
+        <IonList inset={true}>
+          <IonRadioGroup>
+            <IonItem>
+              <IonRadio value="lowvision">Visión Baja</IonRadio>
+            </IonItem>
+            <IonItem>
+              <IonRadio value="dyslexia">Dislexia</IonRadio>
+            </IonItem>
+            <IonItem>
+              <IonRadio value="colorBlindness">Daltonismo</IonRadio>
+            </IonItem>
+          </IonRadioGroup>
+        </IonList>
+
+        <IonListHeader>Tamaño de Texto</IonListHeader>
+        <IonList inset={true}>
+          <IonItem>
+            <IonRange min={0} max={100} value={50} />
+          </IonItem>
+        </IonList>
+
+        <IonListHeader>Interlineado</IonListHeader>
+        <IonList inset={true}>
+          <IonItem>
+            <IonRange min={0} max={100} value={50} />
+          </IonItem>
+        </IonList>
+
+        <IonListHeader>Constraste</IonListHeader>
+        <IonList inset={true}>
+          <IonItem>
+            <IonToggle checked={paletteToggle} onIonChange={toggleChange} justify="space-between">
+              Modo Oscuro
+            </IonToggle>
+          </IonItem>
+        </IonList>
+
       </IonContent>
-    </IonPage>
+    </IonContent>
+</IonPage>
   )
 }

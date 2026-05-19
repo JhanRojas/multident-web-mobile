@@ -1,0 +1,12 @@
+/* (Optional) This is added to prevent the flashing that happens when toggling between palettes */
+ion-item {
+  --transition: none;
+}
+
+body {
+    height: 98% !important;    
+}
+
+ion-list-header {
+  font-size: 16px;
+}
