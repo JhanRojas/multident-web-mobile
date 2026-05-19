@@ -74,24 +74,30 @@ export default function Accessibility() {
       <IonContent fullscreen={true} className="ion-padding">
         <IonListHeader>Idioma</IonListHeader>
         <IonList inset={true}>
-          <IonItem>Español</IonItem>
-          <IonItem>English</IonItem>
-          <IonItem>Quechua</IonItem>
+          <IonRadioGroup>
+            <IonItem>
+              <IonRadio value="spanish">Español</IonRadio>
+            </IonItem>
+            <IonItem>
+              <IonRadio value="english">English</IonRadio>
+            </IonItem>
+            <IonItem>
+              <IonRadio value="quechua">Quechua</IonRadio>
+            </IonItem>
+          </IonRadioGroup>
         </IonList>
 
         <IonListHeader>Perfil de Accesiblidad</IonListHeader>
         <IonList inset={true}>
-          <IonRadioGroup>
-            <IonItem>
-              <IonRadio value="lowvision">Visión Baja</IonRadio>
-            </IonItem>
-            <IonItem>
-              <IonRadio value="dyslexia">Dislexia</IonRadio>
-            </IonItem>
-            <IonItem>
-              <IonRadio value="colorBlindness">Daltonismo</IonRadio>
-            </IonItem>
-          </IonRadioGroup>
+          <IonItem>
+            <IonToggle>Visión Baja</IonToggle>
+          </IonItem>
+          <IonItem>
+            <IonToggle>Dislexia</IonToggle>
+          </IonItem>
+          <IonItem>
+            <IonToggle>Datonismo</IonToggle>
+          </IonItem>
         </IonList>
 
         <IonListHeader>Tamaño de Texto</IonListHeader>
