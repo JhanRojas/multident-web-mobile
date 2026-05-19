@@ -4,7 +4,7 @@ import {
 } from '@ionic/react'
 import { closeOutline, businessOutline, personOutline } from 'ionicons/icons'
 import { useAppointments } from '../../shared/context/AppointmentsContext'
-import './Home.css'
+import './styles/index.css'
  
 const MONTHS_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
  
@@ -31,11 +31,7 @@ export default function Home() {
   const handleSedeSelect = (sede) => { setSelectedSede(sede); setModalOpen(false) }
  
   return (
-    <IonPage>
-      <IonHeader className="home-header">
-        <IonToolbar><IonTitle>Inicio</IonTitle></IonToolbar>
-      </IonHeader>
- 
+    <IonPage> 
       <IonContent fullscreen className="home-content">
         <div className="clinic-card" onClick={() => setModalOpen(true)}>
           <div className="clinic-icon"><IonIcon icon={businessOutline} /></div>

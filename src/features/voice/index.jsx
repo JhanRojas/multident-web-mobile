@@ -19,7 +19,7 @@ import {
 } from "ionicons/icons";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import "../profile/styles/voice.css";
+import "./styles/index.css";
 
 const SPECIALTIES = [
   {
@@ -661,10 +661,6 @@ export default function VoiceAssistant() {
     <IonPage>
       <IonContent fullscreen className="voice-page">
         <section className="voice-shell">
-          <header className="voice-header">
-            <IonIcon icon={mic} className="voice-header-icon" />
-            <h1>Asistente de Voz</h1>
-          </header>
 
           <div className="voice-divider" />
 

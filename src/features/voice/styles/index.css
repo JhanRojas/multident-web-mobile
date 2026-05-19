@@ -16,7 +16,7 @@
   min-height: calc(100dvh - 64px);
   background: #ffffff;
   display: grid;
-  grid-template-rows: auto auto 1fr auto auto auto;
+  grid-template-rows: auto 2fr auto auto auto auto;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -279,8 +279,8 @@
 /* MÓVIL */
 @media (max-width: 560px) {
   .voice-shell {
-    height: calc(100dvh - 64px);
-    min-height: calc(100dvh - 64px);
+    height: calc(100dvh - 50px);
+    min-height: calc(100dvh - 50px);
   }
 
   .voice-header {

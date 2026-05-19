@@ -4,7 +4,7 @@ import {
 } from '@ionic/react'
 import { personOutline, businessOutline } from 'ionicons/icons'
 import { useAppointments } from '../../shared/context/AppointmentsContext'
-import './styles/Appointments.css'
+import './styles/index.css'
  
 const SPECIALTIES = [
   'General', 'Odontología', 'Endodoncia', 'Ortodoncia',
@@ -132,7 +132,7 @@ export default function Appointments() {
   const renderSpecialty = () => (
     <div className="appts-page-wrapper">
       <StepIndicator />
-      <p className="section-title">Seleccione la especialidad</p>
+      <p className="section-title ion-justify-content-center">Seleccione la especialidad</p>
       <div className="specialties-grid">
         {SPECIALTIES.map(s => (
           <button
@@ -148,7 +148,7 @@ export default function Appointments() {
   const renderDatetime = () => (
     <div className="appts-page-wrapper">
       <StepIndicator />
-      <p className="section-title">Seleccione la fecha y hora</p>
+      <p className="section-title ion-justify-content-center">Seleccione la fecha y hora</p>
       <div className="datetime-row">
         <div className="datetime-chip">{formattedDate}</div>
         <div className="datetime-chip">{formattedTime}</div>
@@ -182,7 +182,7 @@ export default function Appointments() {
   const renderDoctor = () => (
     <div className="appts-page-wrapper">
       <StepIndicator />
-      <p className="section-title">Seleccione la fecha y hora</p>
+      <p className="section-title ion-justify-content-center">Seleccione la fecha y hora</p>
       <div className="datetime-row">
         <div className="datetime-chip">{formattedDate}</div>
         <div className="datetime-chip">{formattedTime}</div>
@@ -211,7 +211,7 @@ export default function Appointments() {
   const renderSummary = () => (
     <div className="appts-page-wrapper">
       <StepIndicator />
-      <p className="section-title">Resumen de la cita y pago</p>
+      <p className="section-title ion-justify-content-center">Resumen de la cita y pago</p>
       <div className="summary-card">
         <div className="summary-patient">
           <div className="summary-avatar"><IonIcon icon={personOutline} /></div>
@@ -311,11 +311,6 @@ export default function Appointments() {
  
   return (
     <IonPage>
-      <IonHeader className="appts-header">
-        <IonToolbar>
-          <IonTitle>Nueva Cita – paso 0{stepNum}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
       <IonContent fullscreen className="appts-content">
         {step === 'specialty' && renderSpecialty()}
         {step === 'datetime'  && renderDatetime()}

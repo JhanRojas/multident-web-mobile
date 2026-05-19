@@ -30,7 +30,7 @@ export default function Accessibility() {
             <IonIcon icon={arrowBackOutline} onClick={() => router.goBack()} />
             <h2>Accesibilidad</h2>
           </div>
-          <div className="section-title">
+          <div className="section-title ion-justify-content-start">
             <IonIcon icon={globeOutline} />
             <span>Idioma</span>
           </div>
@@ -39,7 +39,7 @@ export default function Accessibility() {
             <div className="option-item">English</div>
             <div className="option-item no-border">Quechua</div>
           </div>
-          <div className="section-title">
+          <div className="section-title ion-justify-content-start">
             <IonIcon icon={personOutline} />
             <span>Perfil de accesibilidad</span>
           </div>
@@ -58,7 +58,7 @@ export default function Accessibility() {
             </div>
           </div>
           <div className="slider-section">
-            <div className="slider-title">
+            <div className="section-title ion-justify-content-start">
               <IonIcon icon={textOutline} />
               <span>Tamaño de texto</span>
             </div>
@@ -69,7 +69,7 @@ export default function Accessibility() {
             </div>
           </div>
           <div className="slider-section">
-            <div className="slider-title">
+            <div className="section-title ion-justify-content-start">
               <IonIcon icon={reorderThreeOutline} />
               <span>Interlineado</span>
             </div>
@@ -80,7 +80,7 @@ export default function Accessibility() {
             </div>
           </div>
           <div className="contrast-section">
-            <div className="slider-title">
+            <div className="section-title ion-justify-content-start">
               <IonIcon icon={contrastOutline} />
               <span>Contraste</span>
             </div>

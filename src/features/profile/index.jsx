@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAppointments } from '../../shared/context/AppointmentsContext'
 
-import './styles/Profile.css'
+import "./styles/index.css";
 
 export default function Profile() {
   const history = useHistory()
@@ -58,14 +58,6 @@ export default function Profile() {
     <IonPage>
       <IonContent fullscreen className="profile-page">
         <div className="profile-container">
-          <div className="profile-header">
-            <h2>Perfil</h2>
-            <IonIcon
-              icon={notificationsOutline}
-              onClick={() => history.goBack()}
-            />
-          </div>
-
           <div className="profile-card">
             <img
               src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400"
