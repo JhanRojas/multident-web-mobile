@@ -1,0 +1,32 @@
+:root {
+  --ion-background-color: #f2f1f6;
+  --ion-card-background: #f2f1f6;
+  --ion-color-primary: #00aeef;
+  --ion-color-primary-tint: #2abff5;
+  --ion-color-primary-shade: #0596ca;
+  --ion-font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+    sans-serif;
+  --ios-glass-border-radius: 18px;
+  --toolbar-background-color-rgb: 255, 255, 255;
+  --item-background-color: #ffffff;
+  --datetime-background-color: #ffffff;
+}
+
+.high-contrast {
+  --ion-background-color: #d4d4d4;
+  --ion-card-background: #ffffff;
+  --toolbar-background-color-rgb: 212, 212, 212;
+}
+
+.ion-palette-dark {
+  --item-background-color: #1c1c1d;
+  --datetime-background-color: #1c1c1d;
+  --ion-card-background: #1c1c1d;
+  --toolbar-background-color-rgb: 0, 0, 0;
+}
+.ion-palette-dark.high-contrast {
+  --item-background-color: #4e4e4e;
+  --datetime-background-color: #4e4e4e;
+  --ion-card-background: #4e4e4e;
+}

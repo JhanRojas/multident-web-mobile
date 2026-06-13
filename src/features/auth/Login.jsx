@@ -1,7 +1,23 @@
-import { IonPage, IonContent, IonToast } from "@ionic/react";
+import {
+  IonPage,
+  IonContent,
+  IonToast,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonImg,
+  IonInput,
+  IonButton,
+  IonList,
+  IonItem,
+  IonText,
+  IonLabel,
+} from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import "./styles/Auth.css";
 
 export default function Login() {
   const history = useHistory();
@@ -39,82 +55,88 @@ export default function Login() {
 
   return (
     <IonPage>
-      <IonContent fullscreen className="auth-page">
-        <main className="auth-card login-card">
-          <div className="auth-logo">M</div>
-
-          <div className="auth-field-header">
-            <span>{useEmail ? "Correo" : "Teléfono"}</span>
-
-            <button
-              type="button"
-              className="auth-link-button"
+      <IonContent fullscreen class="ion-padding">
+        <IonRow className="ion-justify-content-center ion-margin-top ion-margin-bottom">
+          <IonCol size="3">
+            <IonImg src="/images/Logo.png" alt="Multident" />
+          </IonCol>
+        </IonRow>
+        <IonRow className="ion-align-items-center ion-padding-start">
+          <IonCol>
+            <IonText>
+              <h3>{useEmail ? "Correo" : "Teléfono"}</h3>
+            </IonText>
+          </IonCol>
+          <IonCol className="ion-text-end">
+            <IonButton
+              fill="clear"
+              size="small"
               onClick={() => {
                 setUseEmail(!useEmail);
                 setIdentifier("");
               }}
             >
               {useEmail ? "Usar teléfono" : "Usar correo"}
-            </button>
-          </div>
+            </IonButton>
+          </IonCol>
+        </IonRow>
+        <IonList>
+          <IonItem>
+            <IonInput
+              type={useEmail ? "email" : "tel"}
+              placeholder={useEmail ? "correo@gmail.com" : "908 456 824"}
+              value={identifier}
+              onChange={(event) => setIdentifier(event.target.value)}
+            ></IonInput>
+          </IonItem>
+        </IonList>
+        <IonRow className="ion-align-items-center ion-padding-start">
+          <IonCol>
+            <IonText>
+              <h3>Contraseña</h3>
+            </IonText>
+          </IonCol>
+        </IonRow>
 
-          <input
-            className="auth-input"
-            type={useEmail ? "email" : "tel"}
-            placeholder={useEmail ? "correo@gmail.com" : "908 456 824"}
-            value={identifier}
-            onChange={(event) => setIdentifier(event.target.value)}
-          />
-
-          <div className="auth-password-wrapper">
-            <input
-              className="auth-input password-input"
+        <IonList>
+          <IonItem>
+            <IonInput
               type="password"
-              placeholder="PSww#25.com"
+              placeholder="*********"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-            />
-            <span className="password-eye">◉</span>
-          </div>
+            ></IonInput>
+          </IonItem>
+        </IonList>
+        <IonRow>
+          <IonCol>
+            <IonButton fill="clear" size="small">
+              ¿Olvidaste tu contraseña?
+            </IonButton>
+          </IonCol>
+        </IonRow>
+        <IonRow className="ion-margin-top">
+          <IonCol>
+            <IonButton expand="block" onClick={handleLogin}>
+              INGRESAR
+            </IonButton>
+          </IonCol>
+        </IonRow>
 
-          <button type="button" className="forgot-password">
-            ¿Olvidaste tu contraseña?
-          </button>
-
-          <button
-            type="button"
-            className="auth-primary-button"
-            onClick={handleLogin}
+        <p className="auth-register-text">
+          ¿No tienes cuenta?{" "}
+          <IonButton
+            className="button-small"
+            fill="clear"
+            onClick={() => history.push("/register")}
           >
-            INGRESAR
-          </button>
-
-          <p className="auth-register-text">
-            ¿No tienes cuenta?{" "}
-            <button
-              type="button"
-              onClick={() => history.push("/register")}
-            >
-              Regístrate
-            </button>
-          </p>
-
-          <div className="social-login-area">
-            <button type="button" className="social-button">
-              <span className="facebook-icon">f</span>
-              Continuar con Facebook
-            </button>
-
-            <button type="button" className="social-button">
-              <span className="google-icon">G</span>
-              Continuar con Google
-            </button>
-          </div>
-        </main>
-
+            Regístrate
+          </IonButton>
+        </p>
         <IonToast
           isOpen={toast.open}
           message={toast.message}
+          color={"danger"}
           duration={2200}
           onDidDismiss={() =>
             setToast({

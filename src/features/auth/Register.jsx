@@ -1,7 +1,20 @@
-import { IonPage, IonContent, IonToast } from "@ionic/react";
+import {
+  IonPage,
+  IonContent,
+  IonToast,
+  IonHeader,
+  IonToolbar,
+  IonItem,
+  IonButtons,
+  IonBackButton,
+  IonList,
+  IonLabel,
+  IonInput,
+  IonTitle,
+  IonButton,
+} from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import "./styles/Auth.css";
 
 export default function Register() {
   const history = useHistory();
@@ -84,10 +97,7 @@ export default function Register() {
       password: form.password,
     };
 
-    localStorage.setItem(
-      "mockUsers",
-      JSON.stringify([...users, newUser])
-    );
+    localStorage.setItem("mockUsers", JSON.stringify([...users, newUser]));
 
     setToast({
       open: true,
@@ -101,140 +111,68 @@ export default function Register() {
 
   return (
     <IonPage>
-      <IonContent fullscreen className="auth-page">
-        <main className="auth-card register-card">
-          <button
-            type="button"
-            className="register-close"
-            onClick={() => history.push("/login")}
-          >
-            ×
-          </button>
-
-          <div className="auth-logo register-logo">M</div>
-
-          <h1 className="register-title">Crear una cuenta</h1>
-
-          <label className="auth-label">Fecha de Nacimiento</label>
-
-          <div className="birth-grid">
-            <input
-              className="auth-input birth-input"
-              placeholder="08"
-              value={form.day}
-              onChange={(event) => updateField("day", event.target.value)}
-            />
-
-            <input
-              className="auth-input birth-input"
-              placeholder="17"
-              value={form.month}
-              onChange={(event) => updateField("month", event.target.value)}
-            />
-
-            <input
-              className="auth-input birth-input"
-              placeholder="2001"
-              value={form.year}
-              onChange={(event) => updateField("year", event.target.value)}
-            />
-          </div>
-
-          <label className="auth-label">Nombres</label>
-          <input
-            className="auth-input"
-            placeholder="Carmen"
-            value={form.firstName}
-            onChange={(event) => updateField("firstName", event.target.value)}
-          />
-
-          <label className="auth-label">Apellidos</label>
-          <input
-            className="auth-input"
-            placeholder="Salazar Muñoz"
-            value={form.lastName}
-            onChange={(event) => updateField("lastName", event.target.value)}
-          />
-
-          <div className="auth-field-header register-contact-header">
-            <span>{usePhone ? "Teléfono" : "Correo"}</span>
-
-            <button
-              type="button"
-              className="auth-link-button"
-              onClick={() => setUsePhone(!usePhone)}
-            >
-              {usePhone ? "Usar correo" : "Usar teléfono"}
-            </button>
-          </div>
-
-          {usePhone ? (
-            <input
-              className="auth-input"
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton defaultHref="/login" text="back" />
+          </IonButtons>
+          <IonTitle>Crear una cuenta</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen class="ion-padding">
+        <IonList inset>
+          <IonItem button>
+            <IonLabel>Fecha de Nacimiento</IonLabel>
+            <IonLabel>27/09/1992</IonLabel>
+          </IonItem>
+          <IonItem>
+            <IonInput
+              label="First Name"
+              type="text"
+              value={form.firstName}
+              onIonInput={(e) => updateField("firstName", e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonInput
+              label="Last Name"
+              type="text"
+              value={form.lastName}
+              onIonInput={(e) => updateField("lastName", e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonInput
+              label="Phone"
               type="tel"
-              placeholder="908 456 824"
               value={form.phone}
-              onChange={(event) => updateField("phone", event.target.value)}
-            />
-          ) : (
-            <input
-              className="auth-input"
+              onIonInput={(e) => updateField("phone", e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonInput
+              label="Mail"
               type="email"
-              placeholder="carmen@gmail.com"
               value={form.email}
-              onChange={(event) => updateField("email", event.target.value)}
-            />
-          )}
-
-          <label className="auth-label">Contraseña</label>
-
-          <div className="auth-password-wrapper">
-            <input
-              className="auth-input password-input"
+              onIonInput={(e) => updateField("email", e.target.value)}
+            ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonInput
+              label="Password"
               type="password"
-              placeholder="PSww#25.com"
               value={form.password}
-              onChange={(event) => updateField("password", event.target.value)}
+              onIonInput={(e) => updateField("password", e.target.value)}
             />
-            <span className="password-eye">◉</span>
-          </div>
-
-          <label className="terms-row">
-            <input
-              type="checkbox"
-              checked={form.acceptTerms}
-              onChange={(event) =>
-                updateField("acceptTerms", event.target.checked)
-              }
-            />
-            <span>
-              Al registrarte aceptas los{" "}
-              <strong>Términos de servicio</strong> y la{" "}
-              <strong>Política de privacidad</strong>
-            </span>
-          </label>
-
-          <button
-            type="button"
-            className="auth-primary-button register-button"
-            onClick={handleRegister}
-          >
-            REGISTRAR
-          </button>
-
-          <div className="social-login-area register-social">
-            <button type="button" className="social-button">
-              <span className="facebook-icon">f</span>
-              Continuar con Facebook
-            </button>
-
-            <button type="button" className="social-button">
-              <span className="google-icon">G</span>
-              Continuar con Google
-            </button>
-          </div>
-        </main>
-
+          </IonItem>
+        </IonList>
+        <IonButton
+          expand="block"
+          onClick={handleRegister}
+          className="ion-padding ion-text-center"
+        >
+          Registrar
+        </IonButton>
         <IonToast
           isOpen={toast.open}
           message={toast.message}
