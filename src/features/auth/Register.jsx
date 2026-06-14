@@ -12,6 +12,11 @@ import {
   IonInput,
   IonTitle,
   IonButton,
+  IonDatetime,
+  IonText,
+  IonModal,
+  IonDatetimeButton,
+  IonCheckbox,
 } from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -21,10 +26,16 @@ export default function Register() {
 
   const [usePhone, setUsePhone] = useState(false);
 
+  const today = new Date();
+
+  const maxBirthDate = new Date(
+    today.getFullYear() - 18,
+    today.getMonth(),
+    today.getDate(),
+  ).toISOString();
+
   const [form, setForm] = useState({
-    day: "",
-    month: "",
-    year: "",
+    birthDate: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -47,9 +58,7 @@ export default function Register() {
 
   const handleRegister = () => {
     if (
-      !form.day ||
-      !form.month ||
-      !form.year ||
+      !form.birthDate ||
       !form.firstName ||
       !form.lastName ||
       !form.password
@@ -89,7 +98,7 @@ export default function Register() {
 
     const newUser = {
       id: Date.now(),
-      birthDate: `${form.day}/${form.month}/${form.year}`,
+      birthDate: form.birthDate,
       firstName: form.firstName,
       lastName: form.lastName,
       email: form.email,
@@ -121,10 +130,6 @@ export default function Register() {
       </IonHeader>
       <IonContent fullscreen class="ion-padding">
         <IonList inset>
-          <IonItem button>
-            <IonLabel>Fecha de Nacimiento</IonLabel>
-            <IonLabel>27/09/1992</IonLabel>
-          </IonItem>
           <IonItem>
             <IonInput
               label="First Name"
@@ -140,6 +145,10 @@ export default function Register() {
               value={form.lastName}
               onIonInput={(e) => updateField("lastName", e.target.value)}
             ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonLabel>Fecha de Nacimiento</IonLabel>
+            <IonDatetimeButton datetime="birthdate" />
           </IonItem>
           <IonItem>
             <IonInput
@@ -165,6 +174,17 @@ export default function Register() {
               onIonInput={(e) => updateField("password", e.target.value)}
             />
           </IonItem>
+          <IonItem lines="none">
+            <IonCheckbox
+              slot="start"
+              checked={form.acceptTerms}
+              onIonChange={(e) => updateField("acceptTerms", e.detail.checked)}
+            />
+
+            <IonLabel className="ion-text-wrap">
+              Acepto los Términos y Condiciones y la Política de Privacidad
+            </IonLabel>
+          </IonItem>
         </IonList>
         <IonButton
           expand="block"
@@ -173,6 +193,16 @@ export default function Register() {
         >
           Registrar
         </IonButton>
+        <IonModal keepContentsMounted>
+          <IonDatetime
+            id="birthdate"
+            presentation="date"
+            preferWheel={true}
+            locale="es-PE"
+            max={maxBirthDate}
+            onIonChange={(e) => updateField("birthDate", e.detail.value)}
+          />
+        </IonModal>
         <IonToast
           isOpen={toast.open}
           message={toast.message}

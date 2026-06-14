@@ -33,13 +33,29 @@ export default function Login() {
   const handleLogin = () => {
     const users = JSON.parse(localStorage.getItem("mockUsers")) || [];
 
+    console.log("=== LOGIN ===");
+    console.log("useEmail:", useEmail);
+    console.log("identifier:", identifier);
+    console.log("password:", password);
+    console.log("users:", users);
+
     const userFound = users.find((user) => {
       const matchesIdentifier = useEmail
         ? user.email === identifier
         : user.phone === identifier;
 
-      return matchesIdentifier && user.password === password;
+      const matchesPassword = user.password === password;
+
+      console.log({
+        user,
+        matchesIdentifier,
+        matchesPassword,
+      });
+
+      return matchesIdentifier && matchesPassword;
     });
+
+    console.log("userFound:", userFound);
 
     if (!userFound) {
       setToast({
@@ -86,7 +102,10 @@ export default function Login() {
               type={useEmail ? "email" : "tel"}
               placeholder={useEmail ? "correo@gmail.com" : "908 456 824"}
               value={identifier}
-              onChange={(event) => setIdentifier(event.target.value)}
+              onIonInput={(e) => {
+                console.log("EMAIL:", e.detail.value);
+                setIdentifier(e.detail.value ?? "");
+              }}
             ></IonInput>
           </IonItem>
         </IonList>
@@ -104,7 +123,10 @@ export default function Login() {
               type="password"
               placeholder="*********"
               value={password}
-              onChange={(event) => setPassword(event.target.value)}
+              onIonInput={(e) => {
+                console.log("PASSWORD:", e.detail.value);
+                setPassword(e.detail.value ?? "");
+              }}
             ></IonInput>
           </IonItem>
         </IonList>
