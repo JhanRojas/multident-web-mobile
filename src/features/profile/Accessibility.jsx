@@ -66,50 +66,50 @@ export default function Accessibility() {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/profile" text="back" />
           </IonButtons>
-          <IonTitle>{t.accessibilityTitle}</IonTitle>
+          <IonTitle>{t.titleAccessibility}</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonListHeader>Idioma</IonListHeader>
+        <IonListHeader>{t.listHeaderLanguaje}</IonListHeader>
         <IonList inset={true} className=''>
           <IonRadioGroup value={language}
             onIonChange={(e) => changeLanguage(e.detail.value)}>
             <IonItem>
-              <IonRadio value="es">Español</IonRadio>
+              <IonRadio value="es">{t.spanish}</IonRadio>
             </IonItem>
             <IonItem>
-              <IonRadio value="en">English</IonRadio>
+              <IonRadio value="en">{t.english}</IonRadio>
             </IonItem>
             <IonItem>
-              <IonRadio value="qu">Quechua</IonRadio>
+              <IonRadio value="qu">{t.quechua}</IonRadio>
             </IonItem>
           </IonRadioGroup>
         </IonList>
 
-        <IonListHeader>Perfil de Accesiblidad</IonListHeader>
+        <IonListHeader>{t.listHeaderProfile}</IonListHeader>
         <IonList inset={true}>
           <IonItem>
-            <IonToggle>Visión Baja</IonToggle>
+            <IonToggle>{t.lowVision}</IonToggle>
           </IonItem>
           <IonItem>
-            <IonToggle>Dislexia</IonToggle>
+            <IonToggle>{t.dyslexia}</IonToggle>
           </IonItem>
         </IonList>
-        <IonListHeader>Pantalla</IonListHeader>
+        <IonListHeader>{t.listHeaderScreen}</IonListHeader>
         <IonList inset={true}>
           <IonItem>
             <IonToggle justify="space-between" checked={darkMode} onIonChange={(e) => toggleDarkMode(e.detail.checked)}>
-              {t.darkModeText}
+              {t.darkMode}
             </IonToggle>
           </IonItem>
           <IonItem>
             <IonToggle justify="space-between" checked={grayScale} onIonChange={(e) => toggleGrayScale(e.detail.checked)}>
-              Gray Scale
+              {t.grayScale}
             </IonToggle>
           </IonItem>
           <IonItem>
             <IonToggle justify="space-between" checked={highContrast} onIonChange={(e) => toggleHighContrast(e.detail.checked)}>
-              Aumentar contraste
+              {t.increaseContrast}
             </IonToggle>
           </IonItem>
           <IonItem>
@@ -120,11 +120,11 @@ export default function Accessibility() {
                 toggleInvertColors(e.detail.checked)
               }
             >
-              Invertir
+              {t.invertColors}
             </IonToggle>
           </IonItem>
         </IonList>
-        <IonListHeader>{t.textSizeText}</IonListHeader>
+        <IonListHeader>{t.listHeaderText}</IonListHeader>
         <IonList inset={true}>
           <IonItem>
             <IonToggle
@@ -134,10 +134,10 @@ export default function Accessibility() {
                 toggleBoldText(e.detail.checked)
               }
             >
-              Negrita
+              {t.bold}
             </IonToggle>
           </IonItem>
-          <IonItem button routerLink="/accessibility/text-size">Texto mas grande</IonItem>
+          <IonItem button routerLink="/accessibility/text-size">{t.largerText}</IonItem>
         </IonList>
         <IonListHeader>Efeccts</IonListHeader>
         <IonList inset={true}>
