@@ -1,7 +1,19 @@
 import {
-  IonContent,
   IonPage,
-  IonIcon
+  IonContent,
+  IonAvatar,
+  IonButton,
+  IonChip,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
+  IonSegment,
+  IonSegmentButton,
+  IonText,
+  IonGrid,
+  IonRow,
+  IonCol
 } from '@ionic/react'
 
 import {
@@ -18,6 +30,7 @@ import { useEffect, useState, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAppointments } from '../../shared/context/AppointmentsContext'
 import { useTTSContext } from '../../shared/context/TTSContext';
+import { translations } from '../../utils/translations';
 
 import "./styles/index.css";
 
@@ -29,27 +42,32 @@ export default function Profile() {
   const [user, setUser] = useState(null)
 
   const { speak, ttsEnabled } = useTTSContext();
-const hasSpoken = useRef(false);
+  const hasSpoken = useRef(false);
 
-useEffect(() => {
-  if (ttsEnabled && !hasSpoken.current) {
-    hasSpoken.current = true;
-    speak("Pantalla de perfil. Aquí puede ver y editar su información.");
-  }
-  return () => {
-    hasSpoken.current = false;
-    window.speechSynthesis.cancel();
-  };
-}, [ttsEnabled]);
+  const languageSaved = localStorage.getItem('language') || 'es';
+  const t = translations[languageSaved] || translations.es;
 
-useEffect(() => {
-  if (!ttsEnabled) return;
-  if (activeTab === 'perfil')    speak("Mostrando información de perfil.");
-  if (activeTab === 'historial') speak("Mostrando historial clínico de citas.");
-  return () => {
-    window.speechSynthesis.cancel();
-  };
-}, [activeTab, ttsEnabled]);;
+  const [segment, setSegment] = useState("profile");
+
+  useEffect(() => {
+    if (ttsEnabled && !hasSpoken.current) {
+      hasSpoken.current = true;
+      speak("Pantalla de perfil. Aquí puede ver y editar su información.");
+    }
+    return () => {
+      hasSpoken.current = false;
+      window.speechSynthesis.cancel();
+    };
+  }, [ttsEnabled]);
+
+  useEffect(() => {
+    if (!ttsEnabled) return;
+    if (activeTab === 'perfil') speak("Mostrando información de perfil.");
+    if (activeTab === 'historial') speak("Mostrando historial clínico de citas.");
+    return () => {
+      window.speechSynthesis.cancel();
+    };
+  }, [activeTab, ttsEnabled]);;
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('currentUser'))
@@ -80,118 +98,114 @@ useEffect(() => {
 
   return (
     <IonPage>
-      <IonContent fullscreen className="profile-page">
-        <div className="profile-container">
-          <div className="profile-card">
-            <img
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400"
-              alt="perfil"
-              className="profile-image"
-            />
-
-            <div className="profile-info">
-              <h3>{fullName || 'Usuario'}</h3>
-
-              <div className="profile-location">
-                <IonIcon icon={locationOutline} />
-                <span>Lima centro</span>
-              </div>
-
-              <div className="profile-buttons">
-                <button className="edit-btn">
-                  Editar perfil
-                </button>
-
-                <button
-                  className="logout-btn"
-                  onClick={handleLogout}
-                >
-                  Cerrar Sesión
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="tabs-container">
-            <button
-              className={activeTab === 'perfil' ? 'tab active' : 'tab'}
-              onClick={() => setActiveTab('perfil')}
-            >
-              Perfil
-            </button>
-
-            <button
-              className={activeTab === 'historial' ? 'tab active' : 'tab'}
-              onClick={() => setActiveTab('historial')}
-            >
-              Historial Clínico
-            </button>
-          </div>
-
-          {activeTab === 'perfil' && (
-            <div className="profile-details">
-              <div className="detail-item">
-                <IonIcon icon={personOutline} />
-                <span>{fullName || 'Usuario'}</span>
-              </div>
-
-              <div className="detail-item">
-                <IonIcon icon={callOutline} />
-                <span>{userPhone}</span>
-              </div>
-
-              <div className="detail-item">
-                <IonIcon icon={mailOutline} />
-                <span>{userEmail}</span>
-              </div>
-
-              <div
-                className="accessibility-item"
-                onClick={() => history.push('/accessibility')}
+      <IonContent>
+        <IonGrid className="ion-padding">
+          <IonRow>
+            <IonCol size="3">
+              <IonAvatar
+                style={{
+                  width: "72px",
+                  height: "72px"
+                }}
               >
-                <span>Accesibilidad</span>
-                <IonIcon icon={chevronForwardOutline} />
-              </div>
-            </div>
-          )}
+                <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Avatar" />
+              </IonAvatar>
+            </IonCol>
+            <IonCol size="9">
+              <IonText>
+                <h3 className="ion-no-margin">
+                  {user
+                    ? `${user.firstName} ${user.lastName}`
+                    : ""}
+                </h3>
+              </IonText>
+              <IonText color="medium">
+                <small>
+                  <IonIcon icon={locationOutline} />
+                  Lima centro
+                </small>
+              </IonText>
+              <IonRow>
+                <IonCol size="auto">
+                  <IonButton size="small">
+                    {t.buttonEditProfile}
+                  </IonButton>
+                </IonCol>
+                <IonCol size="auto">
+                  <IonButton
+                    size="small"
+                    fill="solid"
+                    color="medium"
+                    onClick={() => {
+                      localStorage.removeItem("currentUser");
+                      history.replace("/login");
+                    }}
+                  >
+                    {t.buttonLogout}
+                  </IonButton>
+                </IonCol>
+              </IonRow>
+            </IonCol>
+          </IonRow>
+        </IonGrid>
+        {/* Segment */}
+        <IonList inset>
+          <IonSegment
+            value={segment}
+            onIonChange={(e) =>
+              setSegment(e.detail.value)
+            }
+          >
+            <IonSegmentButton value="profile">
+              <IonLabel>{t.segmentButtonProfile}</IonLabel>
+            </IonSegmentButton>
 
-          {activeTab === 'historial' && (
-            <div className="appointments-list">
-              {appointments.length === 0 ? (
-                <p className="empty-history">
-                  No tienes citas registradas.
-                </p>
-              ) : (
-                appointments.map((appointment, index) => (
-                  <div className="appointment-card" key={index}>
-                    <div className="appointment-date">
-                      <h1>{appointment.date?.day || appointment.day}</h1>
-                      <span>{appointment.date?.month || appointment.month}</span>
-                      <small>{appointment.year || ''}</small>
-                    </div>
-
-                    <div className="appointment-info">
-                      <h3>{appointment.specialty}</h3>
-                      <p>{appointment.doctor}</p>
-                      <p>{appointment.time}</p>
-                      <small>{appointment.status}</small>
-                    </div>
-
-                    <div className="appointment-location">
-                      <IonIcon icon={businessOutline} />
-                      <small>{appointment.sede || appointment.location}</small>
-                    </div>
-
-                    <IonIcon
-                      icon={chevronForwardOutline}
-                      className="arrow-icon"
-                    />
-                  </div>
-                ))
-              )}
-            </div>
-          )}
-        </div>
+            <IonSegmentButton value="history">
+              <IonLabel>{t.segmentButtonMedicalHistory}</IonLabel>
+            </IonSegmentButton>
+          </IonSegment>
+        </IonList>
+        {/* Datos */}
+        <IonList inset>
+          <IonItem>
+            <IonIcon
+              icon={personOutline}
+              slot="start"
+              color="medium"
+            />
+            <IonLabel>
+              {user
+                ? `${user.firstName} ${user.lastName}`
+                : ""}
+            </IonLabel>
+          </IonItem>
+          <IonItem>
+            <IonIcon
+              icon={callOutline}
+              slot="start"
+              color="medium"
+            />
+            <IonLabel>{user?.phone}</IonLabel>
+          </IonItem>
+          <IonItem>
+            <IonIcon
+              icon={mailOutline}
+              slot="start"
+              color="medium"
+            />
+            <IonLabel>{user?.email}</IonLabel>
+          </IonItem>
+        </IonList>
+        <IonList inset>
+          <IonItem
+            button
+            routerLink="/accessibility"
+          >
+            <IonLabel>
+              {t.labelLinkAccessibility}
+            </IonLabel>
+          </IonItem>
+        </IonList>
       </IonContent>
     </IonPage>
   )
