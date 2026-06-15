@@ -55,7 +55,6 @@ export default function Accessibility() {
 
   const languageSaved = localStorage.getItem('language') || 'es';
   const t = translations[languageSaved] || translations.es;
-  const [contrastMode, setContrastMode] = useState("normal");
 
   const router = useIonRouter()
 
@@ -64,7 +63,7 @@ export default function Accessibility() {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/profile" text="back" />
+            <IonBackButton defaultHref="/profile" text={t.buttonBack} />
           </IonButtons>
           <IonTitle>{t.titleAccessibility}</IonTitle>
         </IonToolbar>
@@ -139,21 +138,21 @@ export default function Accessibility() {
           </IonItem>
           <IonItem button routerLink="/accessibility/text-size">{t.largerText}</IonItem>
         </IonList>
-        <IonListHeader>Efeccts</IonListHeader>
+        <IonListHeader>{t.listHeaderEffects}</IonListHeader>
         <IonList inset={true}>
           <IonItem>
             <IonToggle
               justify="space-between"
               checked={reduceMotion}
               onIonChange={(e) => toggleReduceMotion(e.detail.checked)}
-            >{t.reduceAnimationText}</IonToggle>
+            >{t.reduceAnimations}</IonToggle>
           </IonItem>
         </IonList>
       </IonContent>
       <IonFooter>
         <IonToolbar>
           <IonButton expand="block" className="ion-padding">
-            {t.restoreChangesText}
+            {t.buttonRestoreChanges}
           </IonButton>
         </IonToolbar>
       </IonFooter>
