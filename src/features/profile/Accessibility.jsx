@@ -70,7 +70,7 @@ export default function Accessibility() {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton defaultHref="/profile" text={t.buttonBack} />
+            <IonBackButton defaultHref="/tabs/profile" text={t.buttonBack} />
           </IonButtons>
           <IonTitle>{t.titleAccessibility}</IonTitle>
         </IonToolbar>
