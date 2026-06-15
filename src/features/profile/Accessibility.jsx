@@ -34,6 +34,7 @@ export default function Accessibility() {
 
   const {
     language,
+    profile,
     darkMode,
     grayScale,
     highContrast,
@@ -43,6 +44,7 @@ export default function Accessibility() {
     voiceReading,
     reduceMotion,
     changeLanguage,
+    applyAccessibilityProfile,
     toggleDarkMode,
     toggleGrayScale,
     toggleHighContrast,
@@ -51,6 +53,7 @@ export default function Accessibility() {
     changeFontSize,
     toggleVoiceReading,
     toggleReduceMotion,
+    resetAccessibilitySettings
   } = useAccessibility();
 
   const languageSaved = localStorage.getItem('language') || 'es';
@@ -89,12 +92,26 @@ export default function Accessibility() {
 
         <IonListHeader>{t.listHeaderProfile}</IonListHeader>
         <IonList inset={true}>
-          <IonItem>
-            <IonToggle>{t.lowVision}</IonToggle>
-          </IonItem>
-          <IonItem>
-            <IonToggle>{t.dyslexia}</IonToggle>
-          </IonItem>
+          <IonRadioGroup value={profile}
+            onIonChange={(e) =>
+              applyAccessibilityProfile(e.detail.value)
+            }>
+            <IonItem>
+              <IonRadio value="none">{t.none}</IonRadio>
+            </IonItem>
+            <IonItem>
+              <IonRadio value="lowVision">{t.lowVision}</IonRadio>
+            </IonItem>
+            <IonItem>
+              <IonRadio value="dyslexia">{t.dyslexia}</IonRadio>
+            </IonItem>
+            <IonItem>
+              <IonRadio value="adhd">{t.adhd}</IonRadio>
+            </IonItem>
+            <IonItem>
+              <IonRadio value="colorBlind">{t.colorBlind}</IonRadio>
+            </IonItem>
+          </IonRadioGroup>
         </IonList>
 
         <IonListHeader>{t.listHeaderScreen}</IonListHeader>
@@ -190,7 +207,7 @@ export default function Accessibility() {
       </IonContent>
       <IonFooter>
         <IonToolbar>
-          <IonButton expand="block" className="ion-padding">
+          <IonButton expand="block" className="ion-padding" onClick={resetAccessibilitySettings}>
             {t.buttonRestoreChanges}
           </IonButton>
         </IonToolbar>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 export const useAccessibility = () => {
   const [language, setLanguage] = useState('es');
+  const [profile, setProfile] = useState('none');
   const [darkMode, setDarkMode] = useState(false);
   const [grayScale, setGrayScale] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
@@ -14,6 +15,78 @@ export const useAccessibility = () => {
   const changeLanguage = (value: string) => {
     localStorage.setItem('language', value);
     setLanguage(value);
+  };
+
+  const applyAccessibilityProfile = (profileName: string) => {
+
+    setProfile(profileName);
+    localStorage.setItem('accessibilityProfile', profileName);
+
+    switch (profileName) {
+
+      case 'none':
+        toggleDarkMode(false);
+        toggleGrayScale(false);
+        toggleHighContrast(false);
+        toggleInvertColors(false);
+        toggleBoldText(false);
+        changeFontSize(18);
+        toggleVoiceReading(false);
+        if (reduceMotion) {
+          toggleReduceMotion(false);
+        }
+        break;
+
+      case 'lowVision':
+        toggleDarkMode(false);
+        toggleGrayScale(false);
+        toggleHighContrast(true);
+        toggleInvertColors(false);
+        toggleBoldText(true);
+        changeFontSize(24);
+        toggleVoiceReading(true);
+        if (reduceMotion) {
+          toggleReduceMotion(false);
+        }
+        break;
+
+      case 'dyslexia':
+        toggleDarkMode(false);
+        toggleGrayScale(false);
+        toggleHighContrast(false);
+        toggleInvertColors(false);
+        toggleBoldText(true);
+        changeFontSize(22);
+        toggleVoiceReading(false);
+        if (reduceMotion) {
+          toggleReduceMotion(false);
+        }
+        break;
+
+      case 'adhd':
+        toggleDarkMode(false);
+        toggleGrayScale(false);
+        toggleHighContrast(false);
+        toggleInvertColors(false);
+        toggleBoldText(false);
+        changeFontSize(20);
+        toggleVoiceReading(false);
+        toggleReduceMotion(true);
+        break;
+
+      case 'colorBlind':
+        toggleDarkMode(false);
+        toggleGrayScale(false);
+        toggleHighContrast(true);
+        toggleInvertColors(false);
+        toggleBoldText(true);
+        changeFontSize(18);
+        toggleVoiceReading(false);
+        if (reduceMotion) {
+          toggleReduceMotion(false);
+        }
+        break;
+    }
   };
 
   const toggleDarkMode = (enabled: boolean) => {
@@ -80,8 +153,39 @@ export const useAccessibility = () => {
     window.location.reload();
   };
 
+  const resetAccessibilitySettings = () => {
+
+    changeLanguage('es');
+
+    setProfile('none');
+    localStorage.setItem(
+      'accessibilityProfile',
+      'none'
+    );
+
+    toggleDarkMode(false);
+    toggleGrayScale(false);
+    toggleHighContrast(false);
+    toggleInvertColors(false);
+
+    toggleBoldText(false);
+
+    changeFontSize(18);
+
+    toggleVoiceReading(false);
+
+    if (reduceMotion) {
+      toggleReduceMotion(false);
+    }
+
+
+    localStorage.removeItem('largeText');
+  };
+
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language');
+    const savedProfile =
+      localStorage.getItem('accessibilityProfile');
     const savedDarkMode = localStorage.getItem('darkMode');
     const savedGrayScale = localStorage.getItem('grayScale');
     const savedHighContrast = localStorage.getItem('highContrast');
@@ -95,6 +199,10 @@ export const useAccessibility = () => {
 
     if (savedLanguage) {
       setLanguage(savedLanguage);
+    }
+
+    if (savedProfile) {
+      setProfile(savedProfile);
     }
 
     if (savedDarkMode) {
@@ -163,6 +271,7 @@ export const useAccessibility = () => {
 
   return {
     language,
+    profile,
     darkMode,
     grayScale,
     highContrast,
@@ -172,6 +281,7 @@ export const useAccessibility = () => {
     voiceReading,
     reduceMotion,
     changeLanguage,
+    applyAccessibilityProfile,
     toggleDarkMode,
     toggleGrayScale,
     toggleHighContrast,
@@ -180,5 +290,6 @@ export const useAccessibility = () => {
     changeFontSize,
     toggleVoiceReading,
     toggleReduceMotion,
+    resetAccessibilitySettings
   };
 };
