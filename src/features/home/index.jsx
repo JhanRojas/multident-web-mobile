@@ -72,7 +72,7 @@ export default function Home() {
             </IonLabel>
           </IonItem>
         </IonCard>
-        <IonRow className='ion-padding'>
+        <IonRow className='ion-padding-start ion-padding-end'>
           <IonSegment value={activeApptTab}>
             <IonSegmentButton
               value="appointments"
