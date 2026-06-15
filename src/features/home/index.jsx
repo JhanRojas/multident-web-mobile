@@ -78,14 +78,14 @@ export default function Home() {
               value="appointments"
               contentId="appointments"
             >
-              <IonLabel>Upcoming appts</IonLabel>
+              <IonLabel>{t.segmentButtonUpcomingAppts}</IonLabel>
             </IonSegmentButton>
 
             <IonSegmentButton
               value="exams"
               contentId="exams"
             >
-              <IonLabel>Exams</IonLabel>
+              <IonLabel>{t.segmentButtonExams}</IonLabel>
             </IonSegmentButton>
           </IonSegment>
         </IonRow>
