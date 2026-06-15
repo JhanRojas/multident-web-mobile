@@ -12,7 +12,7 @@ ion-button.button-small {
   font-weight: normal;
 }
 
-ion-toolbar::before {
+ion-header > ion-toolbar::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -25,13 +25,32 @@ ion-toolbar::before {
     rgba(var(--toolbar-background-color-rgb), 0) 100%
   );
 }
-ion-toolbar {
+ion-header > ion-toolbar {
   --background: transparent;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
 }
-.header-ios ion-toolbar:last-of-type {
-  --border-width: 0 0 0;
+ion-toolbar {
+  --border-width: 0 !important;
+}
+
+ion-footer > ion-toolbar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(var(--toolbar-background-color-rgb), 0.82) 0%,
+    rgba(var(--toolbar-background-color-rgb), 0.58) 28%,
+    rgba(var(--toolbar-background-color-rgb), 0.28) 52%,
+    rgba(var(--toolbar-background-color-rgb), 0.1) 78%,
+    rgba(var(--toolbar-background-color-rgb), 0) 100%
+  );
+}
+ion-footer > ion-toolbar {
+  --background: transparent;
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
 }
 
 ion-tab-bar {
@@ -90,4 +109,43 @@ ion-card[router-link]:focus {
 ion-datetime {
   border-radius: var(--ios-glass-border-radius);
   --background: var(--datetime-background-color);
+}
+
+ion-list-header {
+  padding-left: calc(var(--ion-safe-area-left, 0px) + 26px);
+  font-size: min(1.2rem, 20px);
+  --color:gray;
+}
+
+ion-content::part(scroll) {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE y Edge antiguo */
+}
+
+ion-content::part(scroll)::-webkit-scrollbar {
+  display: none; /* Chrome, Edge, Safari */
+}
+
+.gray-scale {
+  filter: grayscale(100%);
+}
+
+html.invert-colors {
+  filter: invert(1);
+}
+
+.bold-text,
+.bold-text ion-label,
+.bold-text ion-title,
+.bold-text ion-text,
+.bold-text p,
+.bold-text span,
+.bold-text h1,
+.bold-text h2,
+.bold-text h3,
+.bold-text h4,
+.bold-text h5,
+.bold-text h6,
+.bold-text button {
+  font-weight: 700 !important;
 }

@@ -4,6 +4,7 @@ import { Redirect, Route } from "react-router-dom";
 
 import TabsLayout from "./TabsLayout";
 import Accessibility from "../features/profile/Accessibility";
+import TextSize from "../features/profile/TextSize";
 import Login from "../features/auth/Login";
 import Register from "../features/auth/Register";
 import { AppointmentsProvider } from "../shared/context/AppointmentsContext";
@@ -17,6 +18,7 @@ export default function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/accessibility" component={Accessibility} />
+            <Route exact path="/accessibility/text-size" component={TextSize} />
             <Route path="/tabs" component={TabsLayout} />
 
             <Route exact path="/">

@@ -19,70 +19,69 @@ import {
   IonRadio,
   IonRadioGroup,
   useIonRouter,
+  IonFooter,
+  IonSegment,
+  IonSegmentButton,
 } from '@ionic/react';
 
-import { personCircle, personCircleOutline, sunny, sunnyOutline, arrowBackOutline } from 'ionicons/icons';
+import { personCircle, personCircleOutline, sunny, sunnyOutline, arrowBackOutline, moonOutline, colorFillOutline, contrastOutline } from 'ionicons/icons';
+
+
+import { translations } from '../../utils/translations';
+import { useAccessibility } from '../../hooks/useAccessibility';
 
 export default function Accessibility() {
 
-  const [paletteToggle, setPaletteToggle] = useState(false);
+  const {
+    language,
+    darkMode,
+    grayScale,
+    highContrast,
+    invertColors,
+    boldText,
+    fontSize,
+    voiceReading,
+    reduceMotion,
+    changeLanguage,
+    toggleDarkMode,
+    toggleGrayScale,
+    toggleHighContrast,
+    toggleInvertColors,
+    toggleBoldText,
+    changeFontSize,
+    toggleVoiceReading,
+    toggleReduceMotion,
+  } = useAccessibility();
 
-  // Listen for the toggle check/uncheck to toggle the dark palette
-  const toggleChange = (event) => {
-    toggleDarkPalette(event.detail.checked);
-  };
-
-  // Add or remove the "ion-palette-dark" class on the html element
-  const toggleDarkPalette = (shouldAdd) => {
-    document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
-    localStorage.setItem('darkMode',shouldAdd)
-  };
-
-  // Check/uncheck the toggle and update the palette based on isDark
-  const initializeDarkPalette = (isDark) => {
-    setPaletteToggle(isDark);
-    toggleDarkPalette(isDark);
-  };
-
-  useEffect(() => {
-    const savedDarkMode =
-      localStorage.getItem('darkMode') === 'true'
-  
-    setPaletteToggle(savedDarkMode)
-  
-    document.documentElement.classList.toggle(
-      'ion-palette-dark',
-      savedDarkMode
-    )
-  }, []);
+  const languageSaved = localStorage.getItem('language') || 'es';
+  const t = translations[languageSaved] || translations.es;
+  const [contrastMode, setContrastMode] = useState("normal");
 
   const router = useIonRouter()
 
   return (
- <IonPage>
-  <IonContent fullscreen className="accessibility-page">
-      <IonHeader className="ion-no-border">
+    <IonPage>
+      <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonIcon icon={arrowBackOutline} onClick={() => router.goBack()} />
+            <IonBackButton defaultHref="/profile" text="back" />
           </IonButtons>
-          <IonTitle>Accesibilidad</IonTitle>
-
+          <IonTitle>{t.accessibilityTitle}</IonTitle>
         </IonToolbar>
       </IonHeader>
-
-      <IonContent fullscreen={true} className="ion-padding">
+      <IonContent fullscreen>
         <IonListHeader>Idioma</IonListHeader>
-        <IonList inset={true}>
-          <IonRadioGroup>
+        <IonList inset={true} className=''>
+          <IonRadioGroup value={language}
+            onIonChange={(e) => changeLanguage(e.detail.value)}>
             <IonItem>
-              <IonRadio value="spanish">Español</IonRadio>
+              <IonRadio value="es">Español</IonRadio>
             </IonItem>
             <IonItem>
-              <IonRadio value="english">English</IonRadio>
+              <IonRadio value="en">English</IonRadio>
             </IonItem>
             <IonItem>
-              <IonRadio value="quechua">Quechua</IonRadio>
+              <IonRadio value="qu">Quechua</IonRadio>
             </IonItem>
           </IonRadioGroup>
         </IonList>
@@ -95,36 +94,69 @@ export default function Accessibility() {
           <IonItem>
             <IonToggle>Dislexia</IonToggle>
           </IonItem>
-          <IonItem>
-            <IonToggle>Datonismo</IonToggle>
-          </IonItem>
         </IonList>
-
-        <IonListHeader>Tamaño de Texto</IonListHeader>
+        <IonListHeader>Pantalla</IonListHeader>
         <IonList inset={true}>
           <IonItem>
-            <IonRange min={0} max={100} value={50} />
+            <IonToggle justify="space-between" checked={darkMode} onIonChange={(e) => toggleDarkMode(e.detail.checked)}>
+              {t.darkModeText}
+            </IonToggle>
           </IonItem>
-        </IonList>
-
-        <IonListHeader>Interlineado</IonListHeader>
-        <IonList inset={true}>
           <IonItem>
-            <IonRange min={0} max={100} value={50} />
+            <IonToggle justify="space-between" checked={grayScale} onIonChange={(e) => toggleGrayScale(e.detail.checked)}>
+              Gray Scale
+            </IonToggle>
           </IonItem>
-        </IonList>
-
-        <IonListHeader>Constraste</IonListHeader>
-        <IonList inset={true}>
           <IonItem>
-            <IonToggle checked={paletteToggle} onIonChange={toggleChange} justify="space-between">
-              Modo Oscuro
+            <IonToggle justify="space-between" checked={highContrast} onIonChange={(e) => toggleHighContrast(e.detail.checked)}>
+              Aumentar contraste
+            </IonToggle>
+          </IonItem>
+          <IonItem>
+            <IonToggle
+              justify="space-between"
+              checked={invertColors}
+              onIonChange={(e) =>
+                toggleInvertColors(e.detail.checked)
+              }
+            >
+              Invertir
             </IonToggle>
           </IonItem>
         </IonList>
-
+        <IonListHeader>{t.textSizeText}</IonListHeader>
+        <IonList inset={true}>
+          <IonItem>
+            <IonToggle
+              justify="space-between"
+              checked={boldText}
+              onIonChange={(e) =>
+                toggleBoldText(e.detail.checked)
+              }
+            >
+              Negrita
+            </IonToggle>
+          </IonItem>
+          <IonItem button routerLink="/accessibility/text-size">Texto mas grande</IonItem>
+        </IonList>
+        <IonListHeader>Efeccts</IonListHeader>
+        <IonList inset={true}>
+          <IonItem>
+            <IonToggle
+              justify="space-between"
+              checked={reduceMotion}
+              onIonChange={(e) => toggleReduceMotion(e.detail.checked)}
+            >{t.reduceAnimationText}</IonToggle>
+          </IonItem>
+        </IonList>
       </IonContent>
-    </IonContent>
-</IonPage>
+      <IonFooter>
+        <IonToolbar>
+          <IonButton expand="block" className="ion-padding">
+            {t.restoreChangesText}
+          </IonButton>
+        </IonToolbar>
+      </IonFooter>
+    </IonPage>
   )
 }
