@@ -11,8 +11,15 @@ import {
   IonText,
   IonButton,
   IonCardHeader,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonSegmentView,
+  IonSegmentContent,
 } from '@ionic/react'
 import { closeOutline, businessOutline, personOutline } from 'ionicons/icons'
+
+import { translations } from '../../utils/translations';
 import { useAppointments } from '../../shared/context/AppointmentsContext'
 import { useTTSContext } from '../../shared/context/TTSContext';
 import { locations } from "../../mocks/locations.mock";
@@ -29,7 +36,12 @@ export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
   const [activeRegionTab, setActiveRegionTab] = useState("lima");
 
-  const [activeApptTab, setActiveApptTab] = useState('proximas');
+  const [activeApptTab, setActiveApptTab] = useState('appointments');
+
+  const languageSaved = localStorage.getItem('language') || 'es';
+  const t = translations[languageSaved] || translations.es;
+
+  const exams = [];
 
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
@@ -60,50 +72,83 @@ export default function Home() {
             </IonLabel>
           </IonItem>
         </IonCard>
+        <IonRow className='ion-padding'>
+          <IonSegment value={activeApptTab}>
+            <IonSegmentButton
+              value="appointments"
+              contentId="appointments"
+            >
+              <IonLabel>Upcoming appts</IonLabel>
+            </IonSegmentButton>
+
+            <IonSegmentButton
+              value="exams"
+              contentId="exams"
+            >
+              <IonLabel>Exams</IonLabel>
+            </IonSegmentButton>
+          </IonSegment>
+        </IonRow>
       </IonHeader>
-      <IonContent className='ion-padding'>
-        <IonSegment
-          value={activeApptTab}
-          onIonChange={(e) => setActiveApptTab(e.detail.value)}
+      <IonContent>
+
+        <IonSegmentView
+          onIonSegmentViewScroll={(e) => {
+            console.log(e);
+          }}
         >
-          <IonSegmentButton value="proximas">
-            <IonLabel>Próximas citas</IonLabel>
-          </IonSegmentButton>
+          <IonSegmentContent id="appointments">
+            {appointments.length > 0 ? (
+              appointments.map((appt) => (
+                <IonCard key={appt.id} button>
+                  <IonCardContent>
+                    <IonGrid>
+                      <IonRow className="ion-align-items-center">
+                        <IonCol size="2">
+                          <h1>{appt.date.day}</h1>
+                          <p>{MONTHS_ES[appt.date.month]}</p>
+                        </IonCol>
+                        <IonCol size="7">
+                          <h2>{appt.specialty}</h2>
+                          <p>{appt.doctor}</p>
+                          <p>{appt.time}</p>
+                          <p>{appt.status}</p>
+                        </IonCol>
+                        <IonCol size="3" className="ion-text-center">
+                          <IonIcon size='large' icon={businessOutline} />
+                          <p>{appt.sede}</p>
+                        </IonCol>
 
-          <IonSegmentButton value="examenes">
-            <IonLabel>Exámenes</IonLabel>
-          </IonSegmentButton>
-        </IonSegment>
-
-        {appointments.length === 0 ? (
-          <div className="empty-state"><p>No tienes citas programadas.</p></div>
-        ) : (
-          <div className="appt-list">
-            {appointments.map(appt => (
-              <IonCard key={appt.id}>
-                <IonItem lines="none">
-
-                  <IonLabel slot="start">
-                    <h1>{appt.date.day}</h1>
-                    <p>{MONTHS_ES[appt.date.month]}</p>
-                  </IonLabel>
-
-                  <IonLabel>
-                    <h2>{appt.specialty}</h2>
-                    <p>{appt.doctor}</p>
-                    <p>{appt.time}</p>
-                  </IonLabel>
-
-                  <IonLabel slot="end">
-                    <IonIcon icon={businessOutline} />
-                    <p>{appt.sede}</p>
-                  </IonLabel>
-
-                </IonItem>
-              </IonCard>
-            ))}
-          </div>
-        )}
+                      </IonRow>
+                    </IonGrid>
+                  </IonCardContent>
+                </IonCard>
+              ))
+            ) : (
+              <IonText color="medium">
+                <p className="ion-text-center ion-padding">
+                  {t.messageNoScheduledAppts}
+                </p>
+              </IonText>
+            )}
+          </IonSegmentContent>
+          <IonSegmentContent id="exams">
+            {exams.length > 0 ? (
+              exams.map((exam) => (
+                <ExamCard
+                  key={exam.id}
+                  exam={exam}
+                />
+              ))
+            ) : (
+              <IonText color="medium">
+                <p className="ion-text-center ion-padding">
+                  {t.messageNoExams}
+                </p>
+              </IonText>
+            )}
+          </IonSegmentContent>
+        </IonSegmentView>
 
         <IonModal isOpen={modalOpen} onDidDismiss={() => setModalOpen(false)} breakpoints={[0, 0.85]} initialBreakpoint={0.85} className="sede-modal">
           <IonHeader translucent>
@@ -116,7 +161,7 @@ export default function Home() {
                   <IonLabel>Lima</IonLabel>
                 </IonSegmentButton>
                 <IonSegmentButton value="province">
-                  <IonLabel>Provincia</IonLabel>
+                  <IonLabel>{t.segmentButtonProvince}</IonLabel>
                 </IonSegmentButton>
               </IonSegment>
             </IonToolbar>
