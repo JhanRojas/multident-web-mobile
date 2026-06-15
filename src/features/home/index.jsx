@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef} from 'react'
 import {
   IonPage, IonContent, IonHeader, IonToolbar, IonTitle, IonModal, IonIcon,
 } from '@ionic/react'
 import { closeOutline, businessOutline, personOutline } from 'ionicons/icons'
 import { useAppointments } from '../../shared/context/AppointmentsContext'
 import './styles/index.css'
+import { useTTSContext } from '../../shared/context/TTSContext';
  
 const MONTHS_ES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
  
@@ -23,12 +24,25 @@ const SEDES = {
  
 export default function Home() {
   const { appointments } = useAppointments()
+  const { speak, ttsEnabled } = useTTSContext();
+  const hasSpoken = useRef(false);
   const [selectedSede, setSelectedSede]         = useState(SEDES.Lima[0])
   const [modalOpen, setModalOpen]               = useState(false)
   const [activeRegionTab, setActiveRegionTab]   = useState('Lima')
   const [activeApptTab, setActiveApptTab]       = useState('proximas')
  
   const handleSedeSelect = (sede) => { setSelectedSede(sede); setModalOpen(false) }
+
+  useEffect(() => {
+  if (ttsEnabled && !hasSpoken.current) {
+    hasSpoken.current = true;
+    speak("Bienvenido a la pantalla de inicio. Tienes dos citas próximas.");
+  }
+  return () => {
+    hasSpoken.current = false;
+    window.speechSynthesis.cancel();
+  };
+}, [ttsEnabled]);
  
   return (
     <IonPage> 

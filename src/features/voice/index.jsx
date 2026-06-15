@@ -20,6 +20,7 @@ import {
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./styles/index.css";
+import { useTTSContext } from '../../shared/context/TTSContext';
 
 const SPECIALTIES = [
   {
@@ -271,7 +272,23 @@ const INITIAL_CONTEXT = {
   awaitingConfirmation: false,
 };
 
+
+
 export default function VoiceAssistant() {
+  const { speak: ttsSpeak, ttsEnabled, pause, resume, stop } = useTTSContext();
+  const hasSpoken = useRef(false);
+
+  useEffect(() => {
+    if (ttsEnabled && !hasSpoken.current) {
+      hasSpoken.current = true;
+      ttsSpeak("Asistente de voz. Presione el micrófono para hablar."); // ✅ usa ttsSpeak directo
+    }
+    return () => {
+      hasSpoken.current = false;
+      window.speechSynthesis.cancel();
+    };
+  }, [ttsEnabled]);
+
   const [messages, setMessages] = useState([
     {
       id: createId(),
@@ -609,16 +626,14 @@ export default function VoiceAssistant() {
   }
 
   function toggleSpeechPause() {
-    if (!window.speechSynthesis) return;
-
-    if (isSpeakingPaused) {
-      window.speechSynthesis.resume();
-      setIsSpeakingPaused(false);
-    } else {
-      window.speechSynthesis.pause();
-      setIsSpeakingPaused(true);
-    }
+  if (isSpeakingPaused) {
+    resume();
+    setIsSpeakingPaused(false);
+  } else {
+    pause(); 
+    setIsSpeakingPaused(true);
   }
+}
 
   function assistantReply(text) {
     setTimeout(() => {
@@ -639,17 +654,7 @@ export default function VoiceAssistant() {
   }
 
   function speak(text) {
-    if (!window.speechSynthesis) return;
-
-    window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "es-CO";
-    utterance.rate = 0.98;
-    utterance.pitch = 1;
-
-    window.speechSynthesis.speak(utterance);
-    setIsSpeakingPaused(false);
+    ttsSpeak(text);
   }
 
   function showToast(message) {

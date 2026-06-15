@@ -9,24 +9,28 @@ import Login from "../features/auth/Login";
 import Register from "../features/auth/Register";
 import { AppointmentsProvider } from "../shared/context/AppointmentsContext";
 
+import { TTSProvider } from "../shared/context/TTSContext";
+
 export default function App() {
   return (
-    <AppointmentsProvider>
-      <IonApp>
-        <IonReactRouter>
-          <IonRouterOutlet>
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/accessibility" component={Accessibility} />
-            <Route exact path="/accessibility/text-size" component={TextSize} />
-            <Route path="/tabs" component={TabsLayout} />
-
-            <Route exact path="/">
-              <Redirect to="/login" />
-            </Route>
-          </IonRouterOutlet>
-        </IonReactRouter>
-      </IonApp>
-    </AppointmentsProvider>
+    //para aplicar lectura
+    <TTSProvider>
+      <AppointmentsProvider>
+        <IonApp>
+          <IonReactRouter>
+            <IonRouterOutlet>
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/accessibility" component={Accessibility} />
+              <Route exact path="/accessibility/text-size" component={TextSize} />
+              <Route path="/tabs" component={TabsLayout} />
+              <Route exact path="/">
+                <Redirect to="/login" />
+              </Route>
+            </IonRouterOutlet>
+          </IonReactRouter>
+        </IonApp>
+      </AppointmentsProvider>
+    </TTSProvider>
   );
 }

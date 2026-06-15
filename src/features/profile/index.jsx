@@ -14,9 +14,10 @@ import {
   notificationsOutline
 } from 'ionicons/icons'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAppointments } from '../../shared/context/AppointmentsContext'
+import { useTTSContext } from '../../shared/context/TTSContext';
 
 import "./styles/index.css";
 
@@ -26,6 +27,29 @@ export default function Profile() {
 
   const [activeTab, setActiveTab] = useState('perfil')
   const [user, setUser] = useState(null)
+
+  const { speak, ttsEnabled } = useTTSContext();
+const hasSpoken = useRef(false);
+
+useEffect(() => {
+  if (ttsEnabled && !hasSpoken.current) {
+    hasSpoken.current = true;
+    speak("Pantalla de perfil. Aquí puede ver y editar su información.");
+  }
+  return () => {
+    hasSpoken.current = false;
+    window.speechSynthesis.cancel();
+  };
+}, [ttsEnabled]);
+
+useEffect(() => {
+  if (!ttsEnabled) return;
+  if (activeTab === 'perfil')    speak("Mostrando información de perfil.");
+  if (activeTab === 'historial') speak("Mostrando historial clínico de citas.");
+  return () => {
+    window.speechSynthesis.cancel();
+  };
+}, [activeTab, ttsEnabled]);;
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('currentUser'))

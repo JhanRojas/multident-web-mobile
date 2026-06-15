@@ -29,6 +29,7 @@ import { personCircle, personCircleOutline, sunny, sunnyOutline, arrowBackOutlin
 
 import { translations } from '../../utils/translations';
 import { useAccessibility } from '../../hooks/useAccessibility';
+import { useTTSContext } from '../../shared/context/TTSContext';
 
 export default function Accessibility() {
 
@@ -56,6 +57,8 @@ export default function Accessibility() {
   const languageSaved = localStorage.getItem('language') || 'es';
   const t = translations[languageSaved] || translations.es;
   const [contrastMode, setContrastMode] = useState("normal");
+
+  const { ttsEnabled, rate, setRate, toggleTTS } = useTTSContext();
 
   const router = useIonRouter()
 
@@ -138,6 +141,45 @@ export default function Accessibility() {
             </IonToggle>
           </IonItem>
           <IonItem button routerLink="/accessibility/text-size">Texto mas grande</IonItem>
+        </IonList>
+
+        <IonListHeader>Lectura accesible</IonListHeader>
+        <IonList inset={true}>
+          <IonItem>
+            <IonToggle
+              justify="space-between"
+              checked={ttsEnabled}
+              onIonChange={(e) => toggleTTS(e.detail.checked)}
+            >
+              Lectura automática de voz
+            </IonToggle>
+          </IonItem>
+
+          {ttsEnabled && (
+            <>
+              <IonItem>
+                <IonLabel>
+                  <p style={{ margin: '4px 0 2px', fontSize: '14px' }}>Velocidad de lectura</p>
+                  <p style={{ fontSize: '12px', color: 'var(--ion-color-medium)' }}>{rate.toFixed(1)}x</p>
+                </IonLabel>
+                <IonRange
+                  slot="end"
+                  min={0.5}
+                  max={2}
+                  step={0.1}
+                  value={rate}
+                  snaps={true}
+                  onIonChange={(e) => setRate(Number(e.detail.value))}
+                  style={{ maxWidth: '160px' }}
+                />
+              </IonItem>
+              <IonItem>
+                <IonLabel style={{ fontSize: '12px', color: 'var(--ion-color-medium)' }}>
+                  La barra de controles aparece en todas las pantallas mientras esté activo
+                </IonLabel>
+              </IonItem>
+            </>
+          )}
         </IonList>
         <IonListHeader>Efeccts</IonListHeader>
         <IonList inset={true}>
