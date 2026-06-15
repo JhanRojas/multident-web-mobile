@@ -15,13 +15,19 @@ import {
 } from 'ionicons/icons'
 
 import { Route, Redirect } from 'react-router-dom'
+
+import { translations } from '../utils/translations';
 import Home from '../features/home'
 import Appointments from '../features/appointments'
 import Profile from '../features/profile'
 import VoiceAssistant from '../features/voice'
 import { TTSBar } from '../shared/components/TTSBar';
 
+
 export default function TabsLayout() {
+  const languageSaved = localStorage.getItem('language') || 'es';
+  const t = translations[languageSaved] || translations.es;
+
   return (
     <>
       <TTSBar />
@@ -43,19 +49,19 @@ export default function TabsLayout() {
         <IonTabBar slot="bottom">
           <IonTabButton tab="home" href="/tabs/home">
             <IonIcon icon={homeOutline} />
-            <IonLabel>Inicio</IonLabel>
+            <IonLabel>{t.tabButtonHome}</IonLabel>
           </IonTabButton>
           <IonTabButton tab="appointments" href="/tabs/appointments">
             <IonIcon icon={calendarOutline} />
-            <IonLabel>Nueva Cita</IonLabel>
+            <IonLabel>{t.tabButtonNewAppt}</IonLabel>
           </IonTabButton>
           <IonTabButton tab="profile" href="/tabs/profile">
             <IonIcon icon={personOutline} />
-            <IonLabel>Mi Perfil</IonLabel>
+            <IonLabel>{t.tabButtonMyProfile}</IonLabel>
           </IonTabButton>
           <IonTabButton tab="voice" href="/tabs/voice">
             <IonIcon icon={micOutline} />
-            <IonLabel>Voz</IonLabel>
+            <IonLabel>{t.tabButtonAssistant}</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
