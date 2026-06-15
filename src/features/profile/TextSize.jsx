@@ -28,6 +28,10 @@ const TextSize = () => {
         fontSize,
         changeFontSize,
     } = useAccessibility();
+
+    const languageSaved = localStorage.getItem('language') || 'es';
+    const t = translations[languageSaved] || translations.es;
+
     const [largeText, setLargeText] = useState(() => {
         return JSON.parse(
             localStorage.getItem("largeText") || "false"
@@ -53,14 +57,14 @@ const TextSize = () => {
                         <IonBackButton defaultHref="/accessibility" />
                     </IonButtons>
                     <IonTitle className="ion-text-center">
-                        Aumentado
+                        {t.titleAugmented}
                     </IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent color="light">
                 <IonList inset>
                     <IonItem>
-                        <IonLabel>Tamaños más legibles</IonLabel>
+                        <IonLabel>{t.labelMoreLegibleSizes}</IonLabel>
                         <IonToggle
                             checked={fontSize >= 22}
                             onIonChange={(e) =>
@@ -71,8 +75,7 @@ const TextSize = () => {
                 </IonList>
                 <IonText color="medium">
                     <p className="ion-text-center ion-padding-horizontal">
-                        Las apps compatibles con Tamaño de letra dinámico se ajustarán a
-                        tu tamaño de lectura preferido.
+                        {t.messageMoreLegibleSizes}
                     </p>
                 </IonText>
             </IonContent>
