@@ -149,3 +149,20 @@ html.invert-colors {
 .bold-text button {
   font-weight: 700 !important;
 }
+
+.reduce-transparency ion-header > ion-toolbar,
+.reduce-transparency ion-footer > ion-toolbar,
+.reduce-transparency ion-tab-bar {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.reduce-transparency ion-header > ion-toolbar::before {
+  background: rgb(var(--toolbar-background-color-rgb));
+}
+.reduce-transparency ion-footer > ion-toolbar::before {
+  background: rgb(var(--toolbar-background-color-rgb));
+}
+.reduce-transparency ion-tab-bar::before {
+  background: rgb(var(--toolbar-background-color-rgb));
+}

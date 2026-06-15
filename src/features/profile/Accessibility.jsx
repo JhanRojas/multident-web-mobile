@@ -39,6 +39,7 @@ export default function Accessibility() {
     grayScale,
     highContrast,
     invertColors,
+    reduceTransparency,
     boldText,
     fontSize,
     voiceReading,
@@ -49,6 +50,7 @@ export default function Accessibility() {
     toggleGrayScale,
     toggleHighContrast,
     toggleInvertColors,
+    toggleReduceTransparency,
     toggleBoldText,
     changeFontSize,
     toggleVoiceReading,
@@ -138,6 +140,19 @@ export default function Accessibility() {
               onIonChange={(e) => toggleInvertColors(e.detail.checked)}
             >
               {t.invertColors}
+            </IonToggle>
+          </IonItem>
+          <IonItem>
+            <IonToggle
+              justify="space-between"
+              checked={reduceTransparency}
+              onIonChange={(e) =>
+                toggleReduceTransparency(
+                  e.detail.checked
+                )
+              }
+            >
+              {t.reduceTransparency}
             </IonToggle>
           </IonItem>
         </IonList>

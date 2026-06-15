@@ -7,6 +7,7 @@ export const useAccessibility = () => {
   const [grayScale, setGrayScale] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
   const [invertColors, setInvertColors] = useState(false);
+  const [reduceTransparency, setReduceTransparency] = useState(false);
   const [boldText, setBoldText] = useState(false);
   const [fontSize, setFontSize] = useState(16);
   const [voiceReading, setVoiceReading] = useState(false);
@@ -18,17 +19,15 @@ export const useAccessibility = () => {
   };
 
   const applyAccessibilityProfile = (profileName: string) => {
-
     setProfile(profileName);
     localStorage.setItem('accessibilityProfile', profileName);
-
     switch (profileName) {
-
       case 'none':
         toggleDarkMode(false);
         toggleGrayScale(false);
         toggleHighContrast(false);
         toggleInvertColors(false);
+        toggleReduceTransparency(false);
         toggleBoldText(false);
         changeFontSize(18);
         toggleVoiceReading(false);
@@ -36,12 +35,12 @@ export const useAccessibility = () => {
           toggleReduceMotion(false);
         }
         break;
-
       case 'lowVision':
         toggleDarkMode(false);
         toggleGrayScale(false);
         toggleHighContrast(true);
         toggleInvertColors(false);
+        toggleReduceTransparency(true);
         toggleBoldText(true);
         changeFontSize(24);
         toggleVoiceReading(true);
@@ -49,12 +48,12 @@ export const useAccessibility = () => {
           toggleReduceMotion(false);
         }
         break;
-
       case 'dyslexia':
         toggleDarkMode(false);
         toggleGrayScale(false);
         toggleHighContrast(false);
         toggleInvertColors(false);
+        toggleReduceTransparency(false);
         toggleBoldText(true);
         changeFontSize(22);
         toggleVoiceReading(false);
@@ -62,23 +61,23 @@ export const useAccessibility = () => {
           toggleReduceMotion(false);
         }
         break;
-
       case 'adhd':
         toggleDarkMode(false);
         toggleGrayScale(false);
         toggleHighContrast(false);
         toggleInvertColors(false);
+        toggleReduceTransparency(true);
         toggleBoldText(false);
         changeFontSize(20);
         toggleVoiceReading(false);
         toggleReduceMotion(true);
         break;
-
       case 'colorBlind':
         toggleDarkMode(false);
         toggleGrayScale(false);
         toggleHighContrast(true);
         toggleInvertColors(false);
+        toggleReduceTransparency(false);
         toggleBoldText(true);
         changeFontSize(18);
         toggleVoiceReading(false);
@@ -108,30 +107,20 @@ export const useAccessibility = () => {
   };
 
   const toggleInvertColors = (enabled: boolean) => {
-    document.documentElement.classList.toggle(
-      'invert-colors',
-      enabled
-    );
-
-    localStorage.setItem(
-      'invertColors',
-      JSON.stringify(enabled)
-    );
-
+    document.documentElement.classList.toggle('invert-colors',enabled);
+    localStorage.setItem('invertColors',JSON.stringify(enabled));
     setInvertColors(enabled);
   };
 
+  const toggleReduceTransparency = (enabled: boolean) => {
+    document.documentElement.classList.toggle('reduce-transparency',enabled);
+    localStorage.setItem('reduceTransparency',JSON.stringify(enabled));
+    setReduceTransparency(enabled);
+  };
+
   const toggleBoldText = (enabled: boolean) => {
-    document.documentElement.classList.toggle(
-      'bold-text',
-      enabled
-    );
-
-    localStorage.setItem(
-      'boldText',
-      JSON.stringify(enabled)
-    );
-
+    document.documentElement.classList.toggle('bold-text',enabled);
+    localStorage.setItem('boldText',JSON.stringify(enabled));
     setBoldText(enabled);
   };
 
@@ -154,45 +143,35 @@ export const useAccessibility = () => {
   };
 
   const resetAccessibilitySettings = () => {
-
     changeLanguage('es');
-
     setProfile('none');
     localStorage.setItem(
       'accessibilityProfile',
       'none'
     );
-
     toggleDarkMode(false);
     toggleGrayScale(false);
     toggleHighContrast(false);
     toggleInvertColors(false);
-
+    toggleReduceTransparency(false);
     toggleBoldText(false);
-
     changeFontSize(18);
-
     toggleVoiceReading(false);
-
     if (reduceMotion) {
       toggleReduceMotion(false);
     }
-
-
     localStorage.removeItem('largeText');
   };
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language');
-    const savedProfile =
-      localStorage.getItem('accessibilityProfile');
+    const savedProfile = localStorage.getItem('accessibilityProfile');
     const savedDarkMode = localStorage.getItem('darkMode');
     const savedGrayScale = localStorage.getItem('grayScale');
     const savedHighContrast = localStorage.getItem('highContrast');
-    const savedInvertColors =
-      localStorage.getItem('invertColors');
-    const savedBoldText =
-      localStorage.getItem('boldText');
+    const savedInvertColors = localStorage.getItem('invertColors');
+    const savedReduceTransparency = localStorage.getItem('reduceTransparency');
+    const savedBoldText = localStorage.getItem('boldText');
     const savedFontSize = localStorage.getItem('fontSize');
     const savedVoiceReading = localStorage.getItem('voiceReading');
     const savedReduceMotion = localStorage.getItem('reduceMotion');
@@ -213,12 +192,7 @@ export const useAccessibility = () => {
 
     if (savedGrayScale) {
       const parsed = JSON.parse(savedGrayScale);
-
-      document.documentElement.classList.toggle(
-        'gray-scale',
-        parsed
-      );
-
+      document.documentElement.classList.toggle('gray-scale', parsed);
       setGrayScale(parsed);
     }
 
@@ -230,31 +204,32 @@ export const useAccessibility = () => {
 
     if (savedInvertColors) {
       const parsed = JSON.parse(savedInvertColors);
+      document.documentElement.classList.toggle('invert-colors', parsed);
+      setInvertColors(parsed);
+    }
 
+    if (savedReduceTransparency) {
+      const parsed = JSON.parse(
+        savedReduceTransparency
+      );
       document.documentElement.classList.toggle(
-        'invert-colors',
+        'reduce-transparency',
         parsed
       );
-
-      setInvertColors(parsed);
+      setReduceTransparency(parsed);
     }
 
     if (savedBoldText) {
       const parsed = JSON.parse(savedBoldText);
-
       document.documentElement.classList.toggle(
         'bold-text',
         parsed
       );
-
       setBoldText(parsed);
     }
 
     if (savedFontSize) {
-      document.documentElement.style.setProperty(
-        '--app-font-size',
-        `${savedFontSize}px`
-      );
+      document.documentElement.style.setProperty('--app-font-size', `${savedFontSize}px`);
       setFontSize(Number(savedFontSize));
     }
 
@@ -276,6 +251,7 @@ export const useAccessibility = () => {
     grayScale,
     highContrast,
     invertColors,
+    reduceTransparency,
     boldText,
     fontSize,
     voiceReading,
@@ -286,6 +262,7 @@ export const useAccessibility = () => {
     toggleGrayScale,
     toggleHighContrast,
     toggleInvertColors,
+    toggleReduceTransparency,
     toggleBoldText,
     changeFontSize,
     toggleVoiceReading,
