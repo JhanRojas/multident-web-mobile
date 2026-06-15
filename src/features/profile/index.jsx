@@ -32,8 +32,6 @@ import { useAppointments } from '../../shared/context/AppointmentsContext'
 import { useTTSContext } from '../../shared/context/TTSContext';
 import { translations } from '../../utils/translations';
 
-import "./styles/index.css";
-
 export default function Profile() {
   const history = useHistory()
   const { appointments } = useAppointments()
@@ -135,7 +133,7 @@ export default function Profile() {
                   <IonButton
                     size="small"
                     fill="solid"
-                    color="medium"
+                    color="danger"
                     onClick={() => {
                       localStorage.removeItem("currentUser");
                       history.replace("/login");
