@@ -34,6 +34,12 @@ export default function ScheduleStep({
 }) {
   const languageSaved = localStorage.getItem('language') || 'es';
   const t = translations[languageSaved] || translations.es;
+  const today = new Date();
+  const maxDate = new Date(
+    today.getFullYear() + 1,
+    today.getMonth(),
+    today.getDate()
+  ).toISOString();
   return (
     <IonPage>
       <IonHeader>
@@ -52,6 +58,10 @@ export default function ScheduleStep({
           <IonItem>
             <IonDatetime
               presentation="date"
+              min={today.toISOString()}
+              max={maxDate}
+              firstDayOfWeek={1}
+              locale={t.datetimeLocale}
               value={appointmentDate}
               onIonChange={(e) =>
                 setAppointmentDate(e.detail.value)

@@ -1,5 +1,6 @@
 export const translations = {
   en: {
+    datetimeLocale:'en-US',
     messageUserCreatedSuccessfully: 'User created successfully',
     tabButtonHome:'Home',
     tabButtonNewAppt:'New appt',
@@ -60,6 +61,7 @@ export const translations = {
   },
 
   es: {
+    datetimeLocale:'es-ES',
     messageUserCreatedSuccessfully: 'Usuario creado exitosamente',
     tabButtonHome:'Inicio',
     tabButtonNewAppt:'Nueva cita',
@@ -121,6 +123,7 @@ export const translations = {
   },
 
   qu: {
+    datetimeLocale:'es-ES',
     messageUserCreatedSuccessfully: 'Usuario allinta ruwasqa',
     tabButtonHome:'Wasi',
     tabButtonNewAppt:'Musuq hampiq cita',

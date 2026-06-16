@@ -22,7 +22,7 @@ import { useHistory } from "react-router-dom";
 export default function Login() {
   const history = useHistory();
 
-  const [useEmail, setUseEmail] = useState(false);
+  const [useEmail, setUseEmail] = useState(true);
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [toast, setToast] = useState({
@@ -32,12 +32,6 @@ export default function Login() {
 
   const handleLogin = () => {
     const users = JSON.parse(localStorage.getItem("mockUsers")) || [];
-
-    console.log("=== LOGIN ===");
-    console.log("useEmail:", useEmail);
-    console.log("identifier:", identifier);
-    console.log("password:", password);
-    console.log("users:", users);
 
     const userFound = users.find((user) => {
       const matchesIdentifier = useEmail

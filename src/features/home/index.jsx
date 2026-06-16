@@ -16,8 +16,9 @@ import {
   IonCol,
   IonSegmentView,
   IonSegmentContent,
+  IonToast,
 } from '@ionic/react'
-import { closeOutline, businessOutline, personOutline } from 'ionicons/icons'
+import { closeOutline, businessOutline, personOutline, locateOutline } from 'ionicons/icons'
 
 import { translations } from '../../utils/translations';
 import { useAppointments } from '../../shared/context/AppointmentsContext'
@@ -56,7 +57,7 @@ export default function Home() {
   const { speak, ttsEnabled } = useTTSContext();
   const hasSpoken = useRef(false);
   const [selectedLocation, setSelectedLocation] = useState(
-    locations.lima[0]
+    locations.lima[19]
   );
   const [modalOpen, setModalOpen] = useState(false);
   const [activeRegionTab, setActiveRegionTab] = useState("lima");
@@ -65,6 +66,9 @@ export default function Home() {
 
   const languageSaved = localStorage.getItem('language') || 'es';
   const t = translations[languageSaved] || translations.es;
+
+  const [showLocationToast, setShowLocationToast] =
+    useState(false);
 
   const exams = [];
 
@@ -120,6 +124,22 @@ export default function Home() {
     setModalOpen(false);
   };
 
+  const handleCurrentLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        findNearestLocation(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+        setShowLocationToast(true);
+        setModalOpen(false);
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  };
+
   useEffect(() => {
 
     if (savedLocation) {
@@ -165,7 +185,6 @@ export default function Home() {
         <IonCard className='ion-padding' button onClick={() => setModalOpen(true)}>
           <IonItem lines="none">
             <IonIcon icon={businessOutline} size='large' slot="start" />
-
             <IonLabel>
               <h3>{selectedLocation.clinicName}</h3>
               <p>{selectedLocation.address}</p>
@@ -270,10 +289,16 @@ export default function Home() {
                 </IonSegmentButton>
               </IonSegment>
             </IonToolbar>
-
           </IonHeader>
           <IonContent fullscreen>
-            <IonList className='ion-padding'>
+            <IonList className='ion-padding-start ion-padding-end'>
+              <IonCard button>
+                <IonCardHeader className='ion-no-padding'>
+                  <IonButton color={"secondary"} size='small' onClick={handleCurrentLocation}>
+                    Set current location <IonIcon className='ion-padding-start' icon={locateOutline}></IonIcon>
+                  </IonButton>
+                </IonCardHeader>
+              </IonCard>
               {(locations[activeRegionTab] || []).map((location) => (
                 <IonCard
                   key={location.id}
@@ -281,7 +306,7 @@ export default function Home() {
                   onClick={() => handleLocationSelect(location)}
                 >
                   <IonCardHeader className='ion-no-padding'>
-                    <IonButton color={location?.id === location.id ? "primary" : "light"} size='small'>
+                    <IonButton color={selectedLocation?.id === location.id ? "primary" : "light"} size='small'>
                       {location.name}
                     </IonButton>
                   </IonCardHeader>
@@ -297,10 +322,18 @@ export default function Home() {
                 </IonCard>
               ))}
             </IonList>
-
           </IonContent>
         </IonModal>
       </IonContent>
+      <IonToast
+        isOpen={showLocationToast}
+        message="Current location detected"
+        duration={2000}
+        color="success"
+        onDidDismiss={() =>
+          setShowLocationToast(false)
+        }
+      />
     </IonPage>
   )
 }
