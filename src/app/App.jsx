@@ -1,7 +1,9 @@
+import { useEffect } from 'react'
 import { IonApp, IonRouterOutlet } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { Redirect, Route } from "react-router-dom";
 
+import { applyAccessibilitySettings } from "../hooks/useAccessibility";
 import TabsLayout from "./TabsLayout";
 import Accessibility from "../features/profile/Accessibility";
 import TextSize from "../features/profile/TextSize";
@@ -12,6 +14,9 @@ import { AppointmentsProvider } from "../shared/context/AppointmentsContext";
 import { TTSProvider } from "../shared/context/TTSContext";
 
 export default function App() {
+  useEffect(() => {
+    applyAccessibilitySettings();
+  }, []);
   return (
     //para aplicar lectura
     <TTSProvider>

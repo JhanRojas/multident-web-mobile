@@ -162,7 +162,7 @@ export const useAccessibility = () => {
     }
     localStorage.removeItem('largeText');
   };
-
+  
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language');
     const savedProfile = localStorage.getItem('accessibilityProfile');
@@ -269,4 +269,64 @@ export const useAccessibility = () => {
     toggleReduceMotion,
     resetAccessibilitySettings
   };
+};
+
+export const applyAccessibilitySettings = () => {
+  const html = document.documentElement;
+
+  const darkMode =
+    JSON.parse(localStorage.getItem("darkMode") || "false");
+
+  const grayScale =
+    JSON.parse(localStorage.getItem("grayScale") || "false");
+
+  const highContrast =
+    JSON.parse(localStorage.getItem("highContrast") || "false");
+
+  const invertColors =
+    JSON.parse(localStorage.getItem("invertColors") || "false");
+
+  const reduceTransparency =
+    JSON.parse(localStorage.getItem("reduceTransparency") || "false");
+
+  const boldText =
+    JSON.parse(localStorage.getItem("boldText") || "false");
+
+  const fontSize =
+    localStorage.getItem("fontSize") || "16";
+
+  html.classList.toggle(
+    "ion-palette-dark",
+    darkMode
+  );
+
+  html.classList.toggle(
+    "gray-scale",
+    grayScale
+  );
+
+  html.classList.toggle(
+    "high-contrast",
+    highContrast
+  );
+
+  html.classList.toggle(
+    "invert-colors",
+    invertColors
+  );
+
+  html.classList.toggle(
+    "reduce-transparency",
+    reduceTransparency
+  );
+
+  html.classList.toggle(
+    "bold-text",
+    boldText
+  );
+
+  html.style.setProperty(
+    "--app-font-size",
+    `${fontSize}px`
+  );
 };
