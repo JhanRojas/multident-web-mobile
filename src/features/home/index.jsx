@@ -22,11 +22,36 @@ import { closeOutline, businessOutline, personOutline } from 'ionicons/icons'
 import { translations } from '../../utils/translations';
 import { useAppointments } from '../../shared/context/AppointmentsContext'
 import { useTTSContext } from '../../shared/context/TTSContext';
-import { locations } from "../../mocks/locations.mock";
+import { locations, districtCoordinates } from "../../mocks/locations.mock";
+
+function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+    Math.cos((lat2 * Math.PI) / 180) *
+    Math.sin(dLon / 2) *
+    Math.sin(dLon / 2);
+
+  return (
+    R *
+    2 *
+    Math.atan2(
+      Math.sqrt(a),
+      Math.sqrt(1 - a)
+    )
+  );
+}
 
 const MONTHS_ES = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 
 export default function Home() {
+  const savedLocation =
+    localStorage.getItem("selectedLocation");
   const { appointments } = useAppointments();
   const { speak, ttsEnabled } = useTTSContext();
   const hasSpoken = useRef(false);
@@ -43,12 +68,87 @@ export default function Home() {
 
   const exams = [];
 
+  const findNearestLocation = (
+    userLat,
+    userLng
+  ) => {
+    const allLocations = [
+      ...locations.lima,
+      ...locations.province,
+    ];
+
+    let nearestLocation = null;
+    let shortestDistance = Infinity;
+
+    allLocations.forEach((location) => {
+      const coords =
+        districtCoordinates[location.name];
+
+      if (!coords) return;
+
+      const distance = getDistance(
+        userLat,
+        userLng,
+        coords.latitude,
+        coords.longitude
+      );
+
+      if (distance < shortestDistance) {
+        shortestDistance = distance;
+        nearestLocation = location;
+      }
+    });
+
+    if (nearestLocation) {
+      setSelectedLocation(nearestLocation);
+
+      localStorage.setItem(
+        "selectedLocation",
+        JSON.stringify(nearestLocation)
+      );
+    }
+  };
+
   const handleLocationSelect = (location) => {
     setSelectedLocation(location);
+
+    localStorage.setItem(
+      "selectedLocation",
+      JSON.stringify(location)
+    );
+
     setModalOpen(false);
   };
 
   useEffect(() => {
+
+    if (savedLocation) {
+      setSelectedLocation(
+        JSON.parse(savedLocation)
+      );
+    } else {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          findNearestLocation(
+            position.coords.latitude,
+            position.coords.longitude
+          );
+        },
+        (error) => {
+          console.error(error);
+
+          // fallback
+          setSelectedLocation(
+            locations.lima.find(
+              (l) => l.id === "san-isidro"
+            )
+          );
+        }
+      );
+    }
+
+
+
     if (ttsEnabled && !hasSpoken.current) {
       hasSpoken.current = true;
       speak("Bienvenido a la pantalla de inicio. Tienes dos citas próximas.");
@@ -120,7 +220,7 @@ export default function Home() {
                           </IonCol>
                           <IonCol size="3" className="ion-text-center">
                             <IonIcon size='large' icon={businessOutline} />
-                            <p>sede</p>
+                            <p>{appt.location.clinicName}</p>
                           </IonCol>
 
                         </IonRow>

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 
 import {
   IonPage,
@@ -35,8 +34,8 @@ export default function PaymentStep({
   appointmentDate,
   appointmentTime,
   onBack,
+  onAppointmentCreated,
 }) {
-  const history = useHistory();
 
   const languageSaved = localStorage.getItem('language') || 'es';
   const t = translations[languageSaved] || translations.es;
@@ -65,6 +64,10 @@ export default function PaymentStep({
 
   const { addAppointment } = useAppointments();
 
+  const selectedLocation = JSON.parse(
+    localStorage.getItem("selectedLocation")
+  );
+
   const handlePayment = () => {
     const appointment = {
       id: Date.now(),
@@ -77,11 +80,12 @@ export default function PaymentStep({
           : "",
       appointmentTime: appointmentTime,
       status: "Scheduled",
-      location:
-        "Lima Centro",
+      location: selectedLocation,
     };
     addAppointment(appointment);
-    history.push("/tabs/home");
+    if (onAppointmentCreated) {
+      onAppointmentCreated();
+    }
   };
 
   return (

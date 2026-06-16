@@ -5,6 +5,8 @@ export const createLocation = ({
   address,
   phone,
   region,
+  latitude,
+  longitude,
 }) => ({
   id,
   name,
@@ -12,4 +14,6 @@ export const createLocation = ({
   address,
   phone,
   region,
+  latitude,
+  longitude,
 });

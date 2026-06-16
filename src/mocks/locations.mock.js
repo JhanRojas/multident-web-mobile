@@ -1,5 +1,147 @@
 import { createLocation } from "../models/location.model";
 
+export const districtCoordinates = {
+    Bellavista: {
+        latitude: -12.0568,
+        longitude: -77.1185,
+    },
+
+    Callao: {
+        latitude: -12.0611,
+        longitude: -77.1143,
+    },
+
+    Ate: {
+        latitude: -12.0250,
+        longitude: -76.9220,
+    },
+
+    Barranco: {
+        latitude: -12.1465,
+        longitude: -77.0209,
+    },
+
+    Carabayllo: {
+        latitude: -11.8852,
+        longitude: -77.0348,
+    },
+
+    Chorrillos: {
+        latitude: -12.1786,
+        longitude: -77.0161,
+    },
+
+    Comas: {
+        latitude: -11.9329,
+        longitude: -77.0409,
+    },
+
+    Independencia: {
+        latitude: -11.9977,
+        longitude: -77.0549,
+    },
+
+    "Jesús María": {
+        latitude: -12.0755,
+        longitude: -77.0452,
+    },
+
+    "La Molina": {
+        latitude: -12.0830,
+        longitude: -76.9289,
+    },
+
+    Lince: {
+        latitude: -12.0838,
+        longitude: -77.0316,
+    },
+
+    "Los Olivos": {
+        latitude: -11.9760,
+        longitude: -77.0753,
+    },
+
+    Magdalena: {
+        latitude: -12.0917,
+        longitude: -77.0675,
+    },
+
+    Miraflores: {
+        latitude: -12.1211,
+        longitude: -77.0297,
+    },
+
+    "Pueblo Libre": {
+        latitude: -12.0768,
+        longitude: -77.0670,
+    },
+
+    "San Borja": {
+        latitude: -12.1088,
+        longitude: -76.9987,
+    },
+
+    "San Isidro": {
+        latitude: -12.0977,
+        longitude: -77.0365,
+    },
+
+    "San Juan de Lurigancho": {
+        latitude: -12.0014,
+        longitude: -76.9982,
+    },
+
+    "San Luis": {
+        latitude: -12.0761,
+        longitude: -76.9962,
+    },
+
+    "San Martín de Porres": {
+        latitude: -12.0043,
+        longitude: -77.0841,
+    },
+
+    "Santa Anita": {
+        latitude: -12.0432,
+        longitude: -76.9712,
+    },
+
+    "Santa Beatriz": {
+        latitude: -12.0708,
+        longitude: -77.0354,
+    },
+
+    "Santa Clara": {
+        latitude: -12.0168,
+        longitude: -76.8184,
+    },
+
+    "Santiago de Surco": {
+        latitude: -12.1456,
+        longitude: -76.9917,
+    },
+
+    Surquillo: {
+        latitude: -12.1177,
+        longitude: -77.0119,
+    },
+
+    "Villa El Salvador": {
+        latitude: -12.2138,
+        longitude: -76.9373,
+    },
+
+    Ica: {
+        latitude: -14.0678,
+        longitude: -75.7286,
+    },
+
+    Trujillo: {
+        latitude: -8.1116,
+        longitude: -79.0287,
+    },
+};
+
 export const locations = {
     lima: [
         createLocation({
@@ -7,6 +149,8 @@ export const locations = {
             name: "Bellavista",
             clinicName: "Callao / Bellavista",
             address: "Av. Elmer Faucett 1651",
+            latitude: -12.0568,
+            longitude: -77.1185,
             phone: "970568317 / 934416859",
             region: "lima",
         }),
