@@ -99,31 +99,36 @@ export default function Home() {
         >
           <IonSegmentContent id="appointments">
             {appointments.length > 0 ? (
-              appointments.map((appt) => (
-                <IonCard key={appt.id} button>
-                  <IonCardContent>
-                    <IonGrid>
-                      <IonRow className="ion-align-items-center">
-                        <IonCol size="2">
-                          <h1>{appt.date.day}</h1>
-                          <p>{MONTHS_ES[appt.date.month]}</p>
-                        </IonCol>
-                        <IonCol size="7">
-                          <h2>{appt.specialty}</h2>
-                          <p>{appt.doctor}</p>
-                          <p>{appt.time}</p>
-                          <p>{appt.status}</p>
-                        </IonCol>
-                        <IonCol size="3" className="ion-text-center">
-                          <IonIcon size='large' icon={businessOutline} />
-                          <p>{appt.sede}</p>
-                        </IonCol>
+              appointments.map((appt) => {
+                const [year, month, day] =
+                  appt.appointmentDate.split("-").map(Number);
 
-                      </IonRow>
-                    </IonGrid>
-                  </IonCardContent>
-                </IonCard>
-              ))
+                return (
+                  <IonCard key={appt.id} button>
+                    <IonCardContent>
+                      <IonGrid>
+                        <IonRow className="ion-align-items-center">
+                          <IonCol size="2">
+                            <h1>{day}</h1>
+                            <p>{MONTHS_ES[month - 1]}</p>
+                          </IonCol>
+                          <IonCol size="7">
+                            <h2>{appt.specialty.name}</h2>
+                            <p>{appt.doctor.name}</p>
+                            <p>{appt.appointmentTime}</p>
+                            <p>{appt.status}</p>
+                          </IonCol>
+                          <IonCol size="3" className="ion-text-center">
+                            <IonIcon size='large' icon={businessOutline} />
+                            <p>sede</p>
+                          </IonCol>
+
+                        </IonRow>
+                      </IonGrid>
+                    </IonCardContent>
+                  </IonCard>
+                );
+              })
             ) : (
               <IonText color="medium">
                 <p className="ion-text-center ion-padding">

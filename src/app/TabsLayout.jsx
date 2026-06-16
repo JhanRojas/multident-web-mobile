@@ -18,7 +18,7 @@ import { Route, Redirect } from 'react-router-dom'
 
 import { translations } from '../utils/translations';
 import Home from '../features/home'
-import Appointments from '../features/appointments'
+import AppointmentBooking from '../features/appointments/AppointmentBooking'
 import Profile from '../features/profile'
 import VoiceAssistant from '../features/voice'
 import { TTSBar } from '../shared/components/TTSBar';
@@ -37,7 +37,7 @@ export default function TabsLayout() {
             <Home />
           </Route>
           <Route exact path="/tabs/appointments">
-            <Appointments />
+            <AppointmentBooking />
           </Route>
           <Route exact path="/tabs/profile">
             <Profile />

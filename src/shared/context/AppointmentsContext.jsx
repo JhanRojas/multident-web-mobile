@@ -1,21 +1,48 @@
-import { createContext, useContext, useState } from 'react'
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 
-const AppointmentsContext = createContext(null)
+const AppointmentsContext = createContext(null);
 
 export function AppointmentsProvider({ children }) {
-  const [appointments, setAppointments] = useState([])
+  const [appointments, setAppointments] = useState([]);
 
-  const addAppointment = (appt) => {
-    setAppointments(prev => [appt, ...prev])
-  }
+  useEffect(() => {
+    const savedAppointments =
+      JSON.parse(localStorage.getItem("appointments")) || [];
+
+    setAppointments(savedAppointments);
+  }, []);
+
+  const addAppointment = (appointment) => {
+    const updatedAppointments = [
+      appointment,
+      ...appointments,
+    ];
+
+    setAppointments(updatedAppointments);
+
+    localStorage.setItem(
+      "appointments",
+      JSON.stringify(updatedAppointments)
+    );
+  };
 
   return (
-    <AppointmentsContext.Provider value={{ appointments, addAppointment }}>
+    <AppointmentsContext.Provider
+      value={{
+        appointments,
+        addAppointment,
+      }}
+    >
       {children}
     </AppointmentsContext.Provider>
-  )
+  );
 }
 
 export function useAppointments() {
-  return useContext(AppointmentsContext)
+  return useContext(AppointmentsContext);
 }
