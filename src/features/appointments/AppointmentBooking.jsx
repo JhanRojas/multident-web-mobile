@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useIonRouter } from "@ionic/react";
+import { IonToast } from "@ionic/react";
 
 import SpecialtyStep from "./components/SpecialtyStep";
 import ScheduleStep from "./components/ScheduleStep";
 import PaymentStep from "./components/PaymentStep";
 import DoctorStep from "./components/DoctorStep";
-import { IonToast } from "@ionic/react";
+
+import { translations } from '../../utils/translations';
 
 export default function AppointmentBooking() {
+  const languageSaved = localStorage.getItem('language') || 'es';
+  const t = translations[languageSaved] || translations.es;
   const router = useIonRouter();
   const [step, setStep] = useState(1);
 
@@ -28,12 +32,12 @@ export default function AppointmentBooking() {
     setStep(1);
   };
   const handleAppointmentCreated = () => {
-  setShowSuccessToast(true);
+    setShowSuccessToast(true);
 
-  setTimeout(() => {
-    router.push("/tabs/home", "root");
-  }, 2000);
-};
+    setTimeout(() => {
+      router.push("/tabs/home", "root");
+    }, 2000);
+  };
   return (
     <>
       {step === 1 && (
@@ -79,7 +83,7 @@ export default function AppointmentBooking() {
       )}
       <IonToast
         isOpen={showSuccessToast}
-        message="Appointment created successfully"
+        message={t.messageApptCreatedSuccessfully}
         duration={2000}
         color="success"
         position="top"

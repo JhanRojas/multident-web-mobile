@@ -20,9 +20,13 @@ import {
 } from "@ionic/react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { translations } from '../../utils/translations';
 
 export default function Register() {
   const history = useHistory();
+
+  const languageSaved = localStorage.getItem('language') || 'es';
+  const t = translations[languageSaved] || translations.es;
 
   const [usePhone, setUsePhone] = useState(false);
 
@@ -47,6 +51,7 @@ export default function Register() {
   const [toast, setToast] = useState({
     open: false,
     message: "",
+    color: "normal"
   });
 
   const updateField = (field, value) => {
@@ -66,6 +71,7 @@ export default function Register() {
       setToast({
         open: true,
         message: "Completa todos los datos obligatorios.",
+        color: "danger"
       });
       return;
     }
@@ -74,6 +80,7 @@ export default function Register() {
       setToast({
         open: true,
         message: "Ingresa tu número de teléfono.",
+        color: "danger"
       });
       return;
     }
@@ -82,6 +89,7 @@ export default function Register() {
       setToast({
         open: true,
         message: "Ingresa tu correo electrónico.",
+        color: "danger"
       });
       return;
     }
@@ -90,6 +98,7 @@ export default function Register() {
       setToast({
         open: true,
         message: "Debes aceptar los términos y condiciones.",
+        color: "danger"
       });
       return;
     }
@@ -110,7 +119,8 @@ export default function Register() {
 
     setToast({
       open: true,
-      message: "Cuenta creada correctamente.",
+      message: t.messageUserCreatedSuccessfully,
+      color: "success"
     });
 
     setTimeout(() => {
@@ -206,8 +216,8 @@ export default function Register() {
         <IonToast
           isOpen={toast.open}
           message={toast.message}
+          color={toast.color}
           duration={2200}
-          color="success"
           position="top"
           onDidDismiss={() =>
             setToast({

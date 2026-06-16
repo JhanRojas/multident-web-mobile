@@ -1,5 +1,6 @@
 export const translations = {
   en: {
+    messageUserCreatedSuccessfully: 'User created successfully',
     tabButtonHome:'Home',
     tabButtonNewAppt:'New appt',
     tabButtonMyProfile:'My profile',
@@ -54,10 +55,12 @@ export const translations = {
     labelMethod: 'Method',
     labelCard: 'Card',
     listHeaderApptPayment: 'Payment info',
-    buttonApptConfirm: 'Confirm and pay'
+    buttonApptConfirm: 'Confirm and pay',
+    messageApptCreatedSuccessfully: 'Appointment created successfully'
   },
 
   es: {
+    messageUserCreatedSuccessfully: 'Usuario creado exitosamente',
     tabButtonHome:'Inicio',
     tabButtonNewAppt:'Nueva cita',
     tabButtonMyProfile:'Mi perfil',
@@ -113,10 +116,12 @@ export const translations = {
     labelMethod: 'Método',
     labelCard: 'Tarjeta',
     listHeaderApptPayment: 'Información de pago',
-    buttonApptConfirm: 'Confirmar y pagar'
+    buttonApptConfirm: 'Confirmar y pagar',
+    messageApptCreatedSuccessfully: 'Cita creada exitosamente'
   },
 
   qu: {
+    messageUserCreatedSuccessfully: 'Usuario allinta ruwasqa',
     tabButtonHome:'Wasi',
     tabButtonNewAppt:'Musuq hampiq cita',
     tabButtonMyProfile:'Perfilniy',
@@ -172,6 +177,7 @@ export const translations = {
     labelMethod: 'Imayna',
     labelCard: 'Tarjeta',
     listHeaderApptPayment: 'Pagaymanta willakuy',
-    buttonApptConfirm: 'Takyachiy hinaspa pagay'
+    buttonApptConfirm: 'Takyachiy hinaspa pagay',
+    messageApptCreatedSuccessfully: 'Nombramiento allinta kamasqa'
   },
 };
