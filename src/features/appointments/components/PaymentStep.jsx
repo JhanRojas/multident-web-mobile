@@ -99,22 +99,22 @@ export default function PaymentStep({
         <BookingStepper step={4} />
       </IonHeader>
       <IonContent fullscreen>
-        <IonListHeader>Resumen</IonListHeader>
+        <IonListHeader>{t.listHeaderApptSummary}</IonListHeader>
         <IonList inset>
           <IonItem>
-            <IonLabel>Paciente</IonLabel>
+            <IonLabel>{t.labelPacient}</IonLabel>
             <IonLabel>{currentUser?.firstName} {currentUser?.lastName}</IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>Especialidad</IonLabel>
+            <IonLabel>{t.labelSpeciality}</IonLabel>
             <IonLabel>{specialty?.name}</IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>Doctor</IonLabel>
+            <IonLabel>{t.labelDoctor}</IonLabel>
             <IonLabel>{doctor?.name}</IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>Fecha y hora</IonLabel>
+            <IonLabel>{t.labelDatetime}</IonLabel>
             <IonLabel>{appointmentDate
               ? new Date(
                 appointmentDate
@@ -122,19 +122,19 @@ export default function PaymentStep({
               : "-"} {appointmentTime}</IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>Pago</IonLabel>
+            <IonLabel>{t.labelCost}</IonLabel>
             <IonLabel>S/ 120.00</IonLabel>
           </IonItem>
         </IonList>
-        <IonListHeader>Pago</IonListHeader>
+        <IonListHeader>{t.listHeaderApptPayment}</IonListHeader>
         <IonList inset>
           <IonItem>
-            <IonLabel>Método</IonLabel>
+            <IonLabel>{t.labelMethod}</IonLabel>
             <IonLabel>Tarjeta</IonLabel>
           </IonItem>
           <IonItem>
-            <IonLabel>Tarjeta</IonLabel>
-            <IonLabel>1000 4444 5555 2222</IonLabel>
+            <IonLabel>{t.labelCard}</IonLabel>
+            <IonLabel>**** **** **** 2448</IonLabel>
           </IonItem>
         </IonList>
         <IonList inset>
@@ -142,7 +142,7 @@ export default function PaymentStep({
             expand="block"
             onClick={handlePayment}
           >
-            Confirmar cita
+            {t.buttonApptConfirm}
           </IonButton>
         </IonList>
       </IonContent>

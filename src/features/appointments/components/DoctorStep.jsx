@@ -48,7 +48,7 @@ export default function DoctorStep({
       </IonHeader>
       <IonContent>
         <IonListHeader className="ion-no-padding ion-text-center">
-          <IonLabel >Seleccione un médico</IonLabel>
+          <IonLabel >{t.listHeaderApptDoctor}</IonLabel>
         </IonListHeader>
         <IonList inset>
           {doctors.map((item) => (

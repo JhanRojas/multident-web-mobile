@@ -40,7 +40,21 @@ export const translations = {
     buttonRestoreChanges: 'Restore changes',
     titleAugmented: 'Augmented',
     labelMoreLegibleSizes:'More legible sizes',
-    messageMoreLegibleSizes:'Apps that support Dynamic Font Size will adjust to your preferred reading size.'
+    messageMoreLegibleSizes:'Apps that support Dynamic Font Size will adjust to your preferred reading size.',
+    listHeaderApptSpeciality: 'Select the specialty',
+    listHeaderApptDate: 'Select the date',
+    listHeaderApptTime: 'Select the time',
+    listHeaderApptDoctor: 'Select a doctor',
+    listHeaderApptSummary: 'Summary',
+    labelPacient: 'Pacient',
+    labelSpeciality: 'Speciality',
+    labelDoctor: 'Doctor',
+    labelDatetime: 'Date and time',
+    labelCost: 'Total cost',
+    labelMethod: 'Method',
+    labelCard: 'Card',
+    listHeaderApptPayment: 'Payment info',
+    buttonApptConfirm: 'Confirm and pay'
   },
 
   es: {
@@ -85,7 +99,21 @@ export const translations = {
     buttonRestoreChanges: 'Restablecer cambios',
     titleAugmented: 'Aumentado',
     labelMoreLegibleSizes:'Tamaños más legibles',
-    messageMoreLegibleSizes:'Las apps compatibles con Tamaño de letra dinámico se ajustarán a tu tamaño de lectura preferido.'
+    messageMoreLegibleSizes:'Las apps compatibles con Tamaño de letra dinámico se ajustarán a tu tamaño de lectura preferido.',
+    listHeaderApptSpeciality: 'Seleccione la especialidad',
+    listHeaderApptDate: 'Seleccione la fecha',
+    listHeaderApptTime: 'Seleccione la hora',
+    listHeaderApptDoctor: 'Seleccione un médico',
+    listHeaderApptSummary: 'Resumen de la cita',
+    labelPacient: 'Paciente',
+    labelSpeciality: 'Especialidad',
+    labelDoctor: 'Médico',
+    labelDatetime: 'Fecha y hora',
+    labelCost: 'Costo total',
+    labelMethod: 'Método',
+    labelCard: 'Tarjeta',
+    listHeaderApptPayment: 'Información de pago',
+    buttonApptConfirm: 'Confirmar y pagar'
   },
 
   qu: {
@@ -130,6 +158,20 @@ export const translations = {
     buttonRestoreChanges: 'Tikraykunata kutichiy',
     titleAugmented: 'Yapasqa',
     labelMoreLegibleSizes:'Aswan ñawinchanapaq sayayniyuq',
-    messageMoreLegibleSizes:'Dinámico Fuente Tamaño yanapaq appkuna munasqayki ñawiriy sayayman allinchakunqa.'
+    messageMoreLegibleSizes:'Dinámico Fuente Tamaño yanapaq appkuna munasqayki ñawiriy sayayman allinchakunqa.',
+    listHeaderApptSpeciality: 'Especialidadta akllay',
+    listHeaderApptDate: 'Punchayta akllay',
+    listHeaderApptTime: 'Tiempota akllay',
+    listHeaderApptDoctor: 'Doctorta akllay',
+    listHeaderApptSummary: 'Cita resumen',
+    labelPacient: 'Unquq',
+    labelSpeciality: 'Especialidad nisqa',
+    labelDoctor: 'Hanpiq',
+    labelDatetime: 'Punchaw pacha',
+    labelCost: 'Llapan qullqi',
+    labelMethod: 'Imayna',
+    labelCard: 'Tarjeta',
+    listHeaderApptPayment: 'Pagaymanta willakuy',
+    buttonApptConfirm: 'Takyachiy hinaspa pagay'
   },
 };

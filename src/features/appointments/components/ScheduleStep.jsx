@@ -46,7 +46,7 @@ export default function ScheduleStep({
       </IonHeader>
       <IonContent fullscreen>
         <IonListHeader className="ion-no-padding ion-text-center">
-          <IonLabel >Seleccione la fecha</IonLabel>
+          <IonLabel >{t.listHeaderApptDate}</IonLabel>
         </IonListHeader>
         <IonList inset>
           <IonItem>
@@ -60,7 +60,7 @@ export default function ScheduleStep({
           </IonItem>
         </IonList>
         <IonListHeader className="ion-no-padding ion-text-center">
-          <IonLabel >Seleccione la hora</IonLabel>
+          <IonLabel >{t.listHeaderApptTime}</IonLabel>
         </IonListHeader>
         <IonList inset>
           <IonItem>

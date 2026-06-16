@@ -117,12 +117,6 @@ export default function Profile() {
                     : ""}
                 </h3>
               </IonText>
-              <IonText color="medium">
-                <small>
-                  <IonIcon icon={locationOutline} />
-                  Lima centro
-                </small>
-              </IonText>
               <IonRow>
                 <IonCol size="auto">
                   <IonButton size="small">

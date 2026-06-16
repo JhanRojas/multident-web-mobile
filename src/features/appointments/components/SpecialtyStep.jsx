@@ -37,7 +37,7 @@ export default function SpecialtyStep({
       </IonHeader>
       <IonContent fullscreen>
         <IonListHeader className="ion-no-padding ion-text-center">
-          <IonLabel >Seleccione la especialidad</IonLabel>
+          <IonLabel >{t.listHeaderApptSpeciality}</IonLabel>
         </IonListHeader>
         <IonGrid>
           <IonRow>

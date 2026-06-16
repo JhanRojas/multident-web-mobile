@@ -207,6 +207,8 @@ export default function Register() {
           isOpen={toast.open}
           message={toast.message}
           duration={2200}
+          color="success"
+          position="top"
           onDidDismiss={() =>
             setToast({
               open: false,
