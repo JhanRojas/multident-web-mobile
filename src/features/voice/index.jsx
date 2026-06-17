@@ -21,6 +21,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./styles/index.css";
 import { useTTSContext } from '../../shared/context/TTSContext';
+import { useAppointments } from  "../../shared/context/AppointmentsContext";
 
 const SPECIALTIES = [
   {
@@ -275,6 +276,7 @@ const INITIAL_CONTEXT = {
 
 
 export default function VoiceAssistant() {
+  const { addAppointment } = useAppointments();
   const {
     speakAssistant: ttsSpeak,
     assistantVoiceEnabled,
@@ -591,6 +593,42 @@ export default function VoiceAssistant() {
   function confirmAppointment(slot) {
     if (!slot) return;
 
+    const currentUser = JSON.parse(
+      localStorage.getItem("currentUser")
+    );
+
+    const selectedLocation = JSON.parse(
+      localStorage.getItem("selectedLocation")
+    );
+
+    const appointment = {
+      id: Date.now(),
+
+      patientId: currentUser?.id,
+
+      specialty: {
+        id: slot.specialty,
+        name: getSpecialtyName(slot.specialty),
+      },
+
+      doctor: {
+        id: slot.doctor.id,
+        name: slot.doctor.name,
+      },
+
+      appointmentDate: slot.date
+        .toISOString()
+        .split("T")[0],
+
+      appointmentTime: slot.time,
+
+      status: "Scheduled",
+
+      location: selectedLocation,
+    };
+
+    addAppointment(appointment);
+
     const currentContext = contextRef.current;
 
     const nextContext = {
@@ -601,7 +639,12 @@ export default function VoiceAssistant() {
     updateAssistantContext(nextContext);
 
     assistantReply(
-      `Listo. Tu cita de ${getSpecialtyName(slot.specialty)} quedó agendada con ${slot.doctor.name} para ${slot.dateLabel} a las ${slot.time}.`,
+      `Listo. Tu cita de
+     ${getSpecialtyName(slot.specialty)}
+     quedó agendada con
+     ${slot.doctor.name}
+     para ${slot.dateLabel}
+     a las ${slot.time}.`
     );
 
     showToast("Cita agendada correctamente.");
