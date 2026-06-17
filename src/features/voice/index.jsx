@@ -275,19 +275,29 @@ const INITIAL_CONTEXT = {
 
 
 export default function VoiceAssistant() {
-  const { speak: ttsSpeak, ttsEnabled, pause, resume, stop } = useTTSContext();
+  const {
+    speakAssistant: ttsSpeak,
+    assistantVoiceEnabled,
+    pause,
+    resume,
+    stop,
+  } = useTTSContext();
   const hasSpoken = useRef(false);
 
   useEffect(() => {
-    if (ttsEnabled && !hasSpoken.current) {
+    if (!hasSpoken.current) {
       hasSpoken.current = true;
-      ttsSpeak("Asistente de voz. Presione el micrófono para hablar."); // ✅ usa ttsSpeak directo
+
+      ttsSpeak(
+        "Asistente de voz. Presione el micrófono para hablar."
+      );
     }
+
     return () => {
       hasSpoken.current = false;
       window.speechSynthesis.cancel();
     };
-  }, [ttsEnabled]);
+  }, []);
 
   const [messages, setMessages] = useState([
     {
@@ -626,14 +636,14 @@ export default function VoiceAssistant() {
   }
 
   function toggleSpeechPause() {
-  if (isSpeakingPaused) {
-    resume();
-    setIsSpeakingPaused(false);
-  } else {
-    pause(); 
-    setIsSpeakingPaused(true);
+    if (isSpeakingPaused) {
+      resume();
+      setIsSpeakingPaused(false);
+    } else {
+      pause();
+      setIsSpeakingPaused(true);
+    }
   }
-}
 
   function assistantReply(text) {
     setTimeout(() => {

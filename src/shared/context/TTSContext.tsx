@@ -2,11 +2,14 @@ import React, { createContext, useContext, useState, useEffect, useRef, useCallb
 
 interface TTSContextType {
   ttsEnabled: boolean;
+  assistantVoiceEnabled: boolean;
   isReading: boolean;
   rate: number;
   setRate: (rate: number) => void;
   toggleTTS: (enabled: boolean) => void;
+  toggleAssistantVoice: (enabled: boolean) => void;
   speak: (text: string) => void;
+  speakAssistant: (text: string) => void;
   pause: () => void;
   resume: () => void;
   stop: () => void;
@@ -22,15 +25,30 @@ export const useTTSContext = () => {
 
 export const TTSProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [ttsEnabled, setTtsEnabled] = useState(false);
+  const [assistantVoiceEnabled, setAssistantVoiceEnabled] = useState(true);
   const [isReading, setIsReading] = useState(false);
   const [rate, setRateState] = useState(1);
-  const currentTextRef = useRef<string>(''); 
-  const rateRef = useRef<number>(1);          
+  const currentTextRef = useRef<string>('');
+  const rateRef = useRef<number>(1);
 
   useEffect(() => {
     const saved = localStorage.getItem('ttsEnabled');
+    const savedAssistantVoice =
+      localStorage.getItem('assistantVoiceEnabled');
     const savedRate = localStorage.getItem('ttsRate');
-    if (saved) setTtsEnabled(JSON.parse(saved));
+    if (saved) {
+      setTtsEnabled(JSON.parse(saved));
+    }
+    if (savedAssistantVoice) {
+      setAssistantVoiceEnabled(
+        JSON.parse(savedAssistantVoice)
+      );
+    } else {
+      localStorage.setItem(
+        'assistantVoiceEnabled',
+        'true'
+      );
+    }
     if (savedRate) {
       const r = parseFloat(savedRate);
       setRateState(r);
@@ -59,19 +77,27 @@ export const TTSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     speakText(text);
   }, [ttsEnabled, speakText]);
 
+  const speakAssistant = useCallback((text: string) => {
+    if (!assistantVoiceEnabled || !text.trim()) return;
+
+    currentTextRef.current = text;
+
+    speakText(text);
+  }, [assistantVoiceEnabled, speakText]);
+
   const stop = useCallback(() => {
     window.speechSynthesis.cancel();
     setIsReading(false);
     currentTextRef.current = '';
   }, []);
 
-  
+
   const pause = useCallback(() => {
     window.speechSynthesis.cancel();
     setIsReading(false);
   }, []);
 
-  
+
   const resume = useCallback(() => {
     if (currentTextRef.current) {
       speakText(currentTextRef.current);
@@ -79,7 +105,7 @@ export const TTSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   }, [speakText]);
 
   const setRate = useCallback((newRate: number) => {
-    rateRef.current = newRate; 
+    rateRef.current = newRate;
     setRateState(newRate);
     localStorage.setItem('ttsRate', String(newRate));
 
@@ -98,10 +124,34 @@ export const TTSProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setTtsEnabled(enabled);
   }, []);
 
+  const toggleAssistantVoice = useCallback(
+    (enabled: boolean) => {
+
+      localStorage.setItem(
+        'assistantVoiceEnabled',
+        JSON.stringify(enabled)
+      );
+
+      setAssistantVoiceEnabled(enabled);
+
+    },
+    []
+  );
+
   return (
     <TTSContext.Provider value={{
-      ttsEnabled, isReading, rate, setRate,
-      toggleTTS, speak, pause, resume, stop
+      ttsEnabled,
+      assistantVoiceEnabled,
+      isReading,
+      rate,
+      setRate,
+      toggleTTS,
+      toggleAssistantVoice,
+      speak,
+      speakAssistant,
+      pause,
+      resume,
+      stop
     }}>
       {children}
     </TTSContext.Provider>
